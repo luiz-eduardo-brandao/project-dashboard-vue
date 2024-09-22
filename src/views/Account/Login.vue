@@ -1,14 +1,11 @@
-<template>
-    <h1>Login</h1>
-
-    <v-divider class="my-7"></v-divider>
-    
-    <v-row justify="center">
+<template>  
+    <v-row justify="center" class="mt-10 pt-10">
         <v-card width="700" class="pa-5">
-            <v-card-title>Faça Login!</v-card-title>
+            <v-row justify="center">
+                <v-card-title>Faça Login!</v-card-title>
+            </v-row>
     
-            <v-card-text>
-                
+            <v-card-text class="mt-4">
                 <v-text-field 
                     label="Username" 
                     placeholder="nome do usuário..."

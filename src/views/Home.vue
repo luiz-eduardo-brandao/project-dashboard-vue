@@ -99,7 +99,7 @@
           </v-table>
         </v-card>
 
-        <v-row>
+        <v-row class="mt-6">
           <v-col cols="12" sm="6" md="4" lg="3" xl="2">
             <v-card flat class="border" v-ripple>
               <v-img 

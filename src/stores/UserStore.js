@@ -41,7 +41,8 @@ export const useUserStore = defineStore('user', () => {
         },
         { key: 'nome', title: 'Nome' },
         { key: 'email', title: 'Email' },
-        { key: 'role', title: 'Cargo' }
+        { key: 'role', title: 'Cargo' },
+        { key: 'actions', }
     ])
 
     const setUser = (newUser) => {

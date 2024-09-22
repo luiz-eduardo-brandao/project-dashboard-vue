@@ -25,33 +25,33 @@
               <v-list-item
                 v-bind="props"
                 prepend-icon="mdi-account-circle"
-                title="Clientes"
+                title="Financeiro"
               >
               </v-list-item>
             </template>
             
-            <v-list>
+            <!-- <v-list> -->
               <v-list-item prepend-icon="mdi-currency-usd" to="/faturamento">Faturamento</v-list-item>
               <v-list-item prepend-icon="mdi-chart-line" to="/relatorio">Relatório</v-list-item>
-            </v-list>
+            <!-- </v-list> -->
           </v-list-group>
           <v-divider class="my-3"></v-divider>
         </div>
 
         <div v-if="isAdmin()">
-          <v-list-subheader>Admin</v-list-subheader>
+          <v-list-subheader>Administrativo</v-list-subheader>
   
           <v-list-item prepend-icon="mdi-account" to="/users">Usuários</v-list-item>
-          <v-list-item prepend-icon="mdi-plus" to="/registerUser">Cadastrar Usuário</v-list-item>
+          <v-list-item prepend-icon="mdi-cog" to="/system">Sistema</v-list-item>
           
           <v-divider class="my-3"></v-divider>
         </div>
         
         <div>
-          <v-list-subheader>Gerente</v-list-subheader>
+          <v-list-subheader>Projetos</v-list-subheader>
           
           <v-list-item prepend-icon="mdi-email" to="/projects">Projetos</v-list-item>
-          <v-list-item prepend-icon="mdi-plus" to="/registerProject">Cadastrar Projetos</v-list-item>
+          <v-list-item prepend-icon="mdi-check-outline" to="/tasks">Tarefas</v-list-item>
         </div>
       </v-list>
       <v-row justify="center">

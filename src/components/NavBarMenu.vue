@@ -8,43 +8,50 @@
         </v-btn>
         </template>
         
-        <v-card min-width="300px" max-width="500px">
-        <v-card-title>
-            <span class="text-left text-grey text-subtitle-1">Notificações (2)</span>
-        </v-card-title>
-        
-        <v-divider></v-divider>
-        
-        <v-list>
-            <v-list-item 
-            prepend-icon="mdi-bell-outline" 
-            append-icon="mdi-email-open"
-            class="my-2"
-            to="/notificacao"
-            >
-            <v-list-item-title class="text-h6">
-                Vuetify & Freeflow Jobs
-            </v-list-item-title>
-            <span class="text-subtitle-1 font-weight-light">
-                fgefef fgefeffgefeffgefeffgefef fgefeffgefef
-                fgefeffgefeffgefef fgefefv fgefef
-            </span>
-            </v-list-item>
+        <v-card 
+            class="rounded-lg"
+            min-width="300px" 
+            max-width="500px"
+        >
+            <v-card-title>
+                <span class="text-left text-grey text-subtitle-1">Notificações (2)</span>
+            </v-card-title>
+            
             <v-divider></v-divider>
-            <v-list-item 
-            prepend-icon="mdi-bell-outline" 
-            append-icon="mdi-email-open"
-            to="/notificacao"
-            >
-            <v-list-item-title class="text-h6">
-                Vuetify & Freeflow Jobs
-            </v-list-item-title>
-            <span class="text-subtitle-1 font-weight-light">
-                fgefef fgefeffgefeffgefeffgefef fgefeffgefef
-                fgefeffgefeffgefef fgefefv fgefef
-            </span>
-            </v-list-item>
-        </v-list> 
+            
+            <v-list>
+                <v-list-item 
+                    prepend-icon="mdi-bell-outline" 
+                    append-icon="mdi-email-open"
+                    class="my-2"
+                    to="/notificacao"
+                >
+                    <v-list-item-title class="text-h6">
+                        Vuetify & Freeflow Jobs
+                    </v-list-item-title>
+
+                    <span class="text-subtitle-1 font-weight-light">
+                        fgefef fgefeffgefeffgefeffgefef fgefeffgefef
+                        fgefeffgefeffgefef fgefefv fgefef
+                    </span>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list-item 
+                    prepend-icon="mdi-bell-outline" 
+                    append-icon="mdi-email-open"
+                    to="/notificacao"
+                >
+                    <v-list-item-title class="text-h6">
+                        Vuetify & Freeflow Jobs
+                    </v-list-item-title>
+                    <span class="text-subtitle-1 font-weight-light">
+                        fgefef fgefeffgefeffgefeffgefef fgefeffgefef
+                        fgefeffgefeffgefef fgefefv fgefef
+                    </span>
+                </v-list-item>
+            </v-list> 
         </v-card>
     </v-menu>
 
