@@ -14,42 +14,48 @@
 
         <v-divider class="my-4"></v-divider>
 
-        <div>
-          <v-list-subheader>Menu</v-list-subheader>
-          <v-list-item prepend-icon="mdi-home" to="/">Home</v-list-item>
-          <v-list-item prepend-icon="mdi-email" to="/projects">Projetos</v-list-item>
-          <v-list-item prepend-icon="mdi-check-outline" >Tarefas</v-list-item>
+        <v-list-subheader>Menu</v-list-subheader>
 
-          <v-list-group value="users">
-            <template #activator="{ props }">
-              <!-- <v-btn v-bind="props">Abrir</v-btn> -->
-  
-              <v-list-item
-                v-bind="props"
-                prepend-icon="mdi-monitor-dashboard"
-                title="Overview"
-              >
-              </v-list-item>
-            </template>
-            
-            <!-- <v-list> -->
-              <v-list-item prepend-icon="mdi-view-dashboard-edit-outline">Dashboard</v-list-item>
-              <v-list-item prepend-icon="mdi-currency-usd" >Faturamento</v-list-item>
-              <v-list-item prepend-icon="mdi-chart-line">Relatório</v-list-item>
-            <!-- </v-list> -->
-          </v-list-group>
+        <div v-for="item in listaMenu" :key="item.id">
+            <v-list-item 
+              v-if="!item.subMenu"
+              :prepend-icon="item.icon" 
+              :to="item.route"
+            >{{ item.title }}</v-list-item>
+
+            <v-list-group 
+              v-else
+              :value="item.id"
+            >
+              <template #activator="{ props }">  
+                <v-list-item
+                  v-bind="props"
+                  :prepend-icon="item.icon"
+                  :title="item.title"
+                >
+                </v-list-item>
+              </template>
+              <div v-for="sub in item.subMenu" :key="sub.id">
+                <v-list-item 
+                  :prepend-icon="sub.icon"
+                >{{ sub.title }}</v-list-item>
+              </div>
+            </v-list-group>
         </div>
 
         <div v-if="isAdmin()">
-          
           <v-divider class="my-3"></v-divider>
 
           <v-list-subheader>Administrativo</v-list-subheader>
   
-          <v-list-item prepend-icon="mdi-account" to="/users">Usuários</v-list-item>
-          <v-list-item prepend-icon="mdi-cog" >Sistema</v-list-item>
-          
+          <div v-for="item in listaMenuAdmin" :key="item.id">
+            <v-list-item 
+              :prepend-icon="item.icon" 
+              :to="item.route"
+            >{{ item.title }}</v-list-item>
+          </div>
         </div>
+
       </v-list>
       <v-row justify="center">
         <div class="position-absolute bottom-0 mb-5" >
@@ -61,8 +67,14 @@
 
 <script setup>
 import { useUserStore } from '../stores/UserStore'
+import { useMenuStore } from '@/stores/MenuStore'
+import { computed } from 'vue'
 
 const useStore = useUserStore()
+const menuStore = useMenuStore()
+
+let listaMenu = computed(() => menuStore.getListaMenu())
+let listaMenuAdmin = computed(() => menuStore.getListaMenuAdmin())
 
 const isAdmin = () => {
   const user = useStore.getUser()
