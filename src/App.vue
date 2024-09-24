@@ -68,9 +68,8 @@ const openCloseDrawer = () => {
 const logout = () => {
   dialog.value = true
 
-  userStore.logout()
-  
   setTimeout(() => {
+    userStore.logout()
     callRoute('/login')
     dialog.value = false
   }, 2000)

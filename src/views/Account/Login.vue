@@ -22,8 +22,6 @@
                         <v-card-title>Faça Login!</v-card-title>
                     </v-row>
             
-                    <v-btn @click="openSnack">teste</v-btn>
-
                     <v-form
                         v-model="form" 
                         @submit.prevent="login">
@@ -41,6 +39,13 @@
                                 type="password"
                                 :rules="passwordRules"
                             ></v-text-field>
+
+                            <v-row justify="center">
+                                <v-checkbox 
+                                    v-model="isPermanent"
+                                    label="Permancer Conectado?"
+                                ></v-checkbox>
+                            </v-row>
                         </v-card-text>
             
                         <v-row justify="center" class="my-6">
@@ -78,7 +83,6 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/UserStore'
 import userService from '@/services/userService'
-
 import { useSnackBarStore } from '@/stores/SnackBarStore'
 
 const snackStore = useSnackBarStore()
@@ -115,6 +119,7 @@ const passwordRules = ref([
 let form = ref(false)
 let username = ref(null)
 let password = ref(null)
+let isPermanent = ref(false)
 
 const router = useRouter()
 const callRoute = (routeName) => router.push(routeName)
@@ -132,6 +137,8 @@ const login = async () => {
     loginLoading.value = true
 
     try {
+        if ( username.value != 'edu' || password.value != '123')
+            throw 'Usuário ou senha incorretos'
 
         // let request = {
 
@@ -149,7 +156,8 @@ const login = async () => {
             nome: 'Edu',
             email: 'edu@gmail.com',
             role: 'Admin',
-            accessToken: 'dfauwhdu12bn1u2bn12hn1ij21inm2i1n'
+            accessToken: 'dfauwhdu12bn1u2bn12hn1ij21inm2i1n',
+            isPermanent: isPermanent.value
         }
 
         setTimeout(() => {
@@ -158,8 +166,13 @@ const login = async () => {
             loginLoading.value = false  
         }, 2000)   
     } catch (error) {
-        alert(error.response.data.error)
-    } finally {
+        snackStore.setSnackBar({
+            time: 5000,
+            color: 'red-darken-3',
+            message: error
+        })
+
+        loginLoading.value = false 
     }
 }
 

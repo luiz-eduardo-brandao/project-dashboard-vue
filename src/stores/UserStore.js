@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import userService from '@/services/userService'
 
 export const useUserStore = defineStore('user', () => {
     let user = ref(null)
-    
     let isAuthenticated = ref(false)
 
     let listaUsuarios = ref([
@@ -45,32 +45,46 @@ export const useUserStore = defineStore('user', () => {
         { key: 'actions', }
     ])
 
-    const setUser = (newUser) => {
-        if (newUser == null)
-            throw 'Usuário inválido'
+    const setIsAuth = (auth) => isAuthenticated.value = auth
 
-        console.log('setUser', newUser)
+    const setUser = (newUser) => {
+        if (newUser == null) throw 'Usuário inválido'
+
+        console.log(newUser)
 
         user.value = newUser
-        isAuthenticated.value = true
+
+        setIsAuth(true)
+
+        if (user.value.isPermanent) {
+            localStorage.setItem('user', JSON.stringify(user.value))
+            setToken(user.value.accessToken)
+        }
     }   
+
+    const setToken = (tokenValue) => {
+        localStorage.setItem('token', tokenValue)
+    }
+
+    const checkToken = async () => { 
+        console.log('checkToken request', localStorage.getItem('token'))
+
+        try {
+            const token = 'Bearer ' + localStorage.getItem('token')
+            // return await userService.verifyToken(token)
+
+            return true;
+        } catch (error) {
+            throw error;
+        }
+    }
 
     const logout = () => {
-        
-        console.log('logout')
-
         user.value = null
         isAuthenticated.value = false
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
     }   
-
-    const adicionarUsuario = async (user) => {
-        if (user == null)
-            throw 'Usuário inválido'
-
-        await listaUsuarios.value.push(user)
-
-        return listaUsuarios.value;
-    }
 
     const getListaUsuarios = () => listaUsuarios.value
     const getListaUsuariosHeader = () => listaUsuariosHeader.value
@@ -80,10 +94,11 @@ export const useUserStore = defineStore('user', () => {
     return {
         getListaUsuarios,
         getListaUsuariosHeader,
-        adicionarUsuario,
         getUser,
         getIsAuthenticated,
         setUser,
-        logout
+        setIsAuth,
+        logout,
+        checkToken
     }
 })

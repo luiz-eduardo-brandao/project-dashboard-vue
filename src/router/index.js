@@ -57,22 +57,30 @@ const router = createRouter({
     ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+    console.log(to)
+
     if (to.meta?.authorize) {
         const userStore = useUserStore()
 
         if (userStore.getIsAuthenticated()) {
-            console.log('authorized')
+            console.log('aqui 2')
 
-            // const isTokenValid = userAuth.checkToken();
-            const isTokenValid = true;
+            const isTokenValid = await userStore.checkToken();
+            console.log('aqui 5')
         
-            if (isTokenValid)
-                next();
-                return
-        }
+            if (isTokenValid) {
+                if (to.name == 'login') {
+                    next({ name: 'home'})
+                    return 
+                }
+                else {
+                    next();
+                    return
+                }
 
-        console.log('rejected')
+            }
+        }
         
         next({ name: 'login'})
         return

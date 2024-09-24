@@ -5,4 +5,13 @@ export default {
         const { data } = await HTTPClient.post('/user/login', payload)
         return data
     },
+    verifyToken: async token => {
+        const { data } = await HTTPClient.post('/user/verify', {
+            headers: {
+                Authorization: token
+            }
+        })
+        
+        return data
+    }
 }
