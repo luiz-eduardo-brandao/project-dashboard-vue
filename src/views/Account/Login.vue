@@ -1,5 +1,5 @@
 <template>
-    <v-row justify="center" class="mt-10 pt-10">
+    <v-row justify="center" class=" h-75">
         <v-col
             align-self="center"
             cols="12"
@@ -22,44 +22,51 @@
                         <v-card-title>Faça Login!</v-card-title>
                     </v-row>
             
-                    <v-card-text class="mt-4">
-                        <v-text-field 
-                            label="Username" 
-                            placeholder="nome do usuário..."
-                            :rules="usernameRules"
-                        ></v-text-field>
-        
-                        <v-text-field
-                            class="mt-3" 
-                            label="Senha" 
-                            placeholder="digite a senha..."
-                            type="password"
-                            :rules="passwordRules"
-                        ></v-text-field>
-                    </v-card-text>
-            
-                    <v-row justify="center" class="my-6">
-                        <span>Não possui uma conta?</span>
-                        <a class="ml-2" href="/registerAccount">Criar conta</a>
-                    </v-row>
-                    
-                    <v-row justify="center" class="my-6">
-                        <a href="/registerAccount">Esqueceu a senha?</a>
-                    </v-row>
+                    <v-btn @click="openSnack">teste</v-btn>
 
-                    <v-divider class="mb-5"></v-divider>
+                    <v-form
+                        v-model="form" 
+                        @submit.prevent="login">
+                        <v-card-text class="mt-4">
+                            <v-text-field 
+                                v-model="username"
+                                label="Username" 
+                                :rules="usernameRules"
+                            ></v-text-field>
             
-                    <v-card-actions>
-                        <v-row justify="center" class="mx-4">
-                            <v-btn 
-                                variant="tonal" 
-                                block 
-                                color="warning"
-                                :loading="loginLoading"
-                                @click="login"
-                            >Login</v-btn>
+                            <v-text-field
+                                v-model="password"
+                                class="mt-3" 
+                                label="Senha" 
+                                type="password"
+                                :rules="passwordRules"
+                            ></v-text-field>
+                        </v-card-text>
+            
+                        <v-row justify="center" class="my-6">
+                            <span>Não possui uma conta?</span>
+                            <a class="ml-2" href="/registerAccount">Criar conta</a>
                         </v-row>
-                    </v-card-actions>
+                        
+                        <!-- <v-row justify="center" class="my-6">
+                            <a href="/registerAccount">Esqueceu a senha?</a>
+                        </v-row> -->
+
+                        <v-divider class="mb-5"></v-divider>
+                
+                        <v-card-actions>
+                            <v-row justify="center" class="mx-4">
+                                <v-btn 
+                                    type="submit"
+                                    variant="tonal" 
+                                    size="large"
+                                    block 
+                                    color="warning"
+                                    :loading="loginLoading"
+                                >Login</v-btn>
+                            </v-row>
+                        </v-card-actions>
+                    </v-form>
                 </v-card>
             </div>
         </v-col>
@@ -70,29 +77,18 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '../../stores/UserStore'
+import userService from '@/services/userService'
 
-const router = useRouter()
-const callRoute = (routeName) => router.push(routeName)
+import { useSnackBarStore } from '@/stores/SnackBarStore'
 
-const userStore = useUserStore()
+const snackStore = useSnackBarStore()
 
-let loginLoading = ref(false)
-
-const login = () => {
-    loginLoading.value = true
-
-    let user = {
-        id: 1,
-        nome: 'Edu',
-        email: 'edu@gmail.com',
-        role: 'Admin',
-    }
-
-    setTimeout(() => {
-        userStore.setUser(user)
-        callRoute('/')
-        loginLoading.value = false       
-    }, 2000)
+const openSnack = () => {
+    snackStore.setSnackBar({
+        time: 5000,
+        color: 'purple-darken-3',
+        message: 'Teste 3'
+    })
 }
 
 const usernameRules = ref([
@@ -115,5 +111,57 @@ const passwordRules = ref([
         return true
     }
 ])
+
+let form = ref(false)
+let username = ref(null)
+let password = ref(null)
+
+const router = useRouter()
+const callRoute = (routeName) => router.push(routeName)
+
+const userStore = useUserStore()
+
+let loginLoading = ref(false)
+
+const login = async () => {    
+    if (!form) return
+    
+    if (!username.value || username.value == '') return
+    if (!password.value || password.value == '') return
+
+    loginLoading.value = true
+
+    try {
+
+        // let request = {
+
+        // }
+
+        // var response = await userService.login(request)
+
+        // if (response.Result)
+        //     userStore.setUser(response.User)
+
+        // throw response.MsgError
+
+        let user = {
+            id: 1,
+            nome: 'Edu',
+            email: 'edu@gmail.com',
+            role: 'Admin',
+            accessToken: 'dfauwhdu12bn1u2bn12hn1ij21inm2i1n'
+        }
+
+        setTimeout(() => {
+            callRoute('/')  
+            userStore.setUser(user)
+            loginLoading.value = false  
+        }, 2000)   
+    } catch (error) {
+        alert(error.response.data.error)
+    } finally {
+    }
+}
+
 
 </script>

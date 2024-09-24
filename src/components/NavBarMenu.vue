@@ -20,7 +20,7 @@
             <v-divider></v-divider>
             
             <v-list>
-                <v-list-item 
+                <v-list-item
                     prepend-icon="mdi-bell-outline" 
                     append-icon="mdi-email-open"
                     class="my-2"
@@ -65,38 +65,47 @@
         </v-avatar>  
         </template>
 
-        <v-card min-width="200px">
-        <v-list :lines="false" density="compact" nav>
-            <v-list-item 
-                to="/profile"
-                prepend-icon="mdi-account-outline"
-            >
-                <v-list-item-title>
-                    Meu Perfil
-                </v-list-item-title>
-            </v-list-item>
+        <v-card class="pa-2" min-width="200px">
+            <v-list :lines="false" density="compact" nav>
+                <v-list-item 
+                    to="/profile"
+                    prepend-icon="mdi-account-outline"
+                >
+                    <v-list-item-title>
+                        Meu Perfil
+                    </v-list-item-title>
+                </v-list-item>
 
-            <v-list-item 
-                to="/favoritos"
-                prepend-icon="mdi-star-outline"
-            >
-                <v-list-item-title>
-                    Favoritos
-                </v-list-item-title>
-            </v-list-item>
+                <v-list-item 
+                    to="/favoritos"
+                    prepend-icon="mdi-star-outline"
+                >
+                    <v-list-item-title>
+                        Favoritos
+                    </v-list-item-title>
+                </v-list-item>
 
-            <v-divider class="my-2"></v-divider>
+                <v-list-item 
+                    to="/settings"
+                    prepend-icon="mdi-cog"
+                >
+                    <v-list-item-title>
+                        Configurações
+                    </v-list-item-title>
+                </v-list-item>
 
-            <v-list-item  
-                @click="$emit('logout')"
-                class="cursor-pointer"
-                prepend-icon="mdi-logout"
-            >
-                <v-list-item-title>
-                    Sair
-                </v-list-item-title>
-            </v-list-item>
-        </v-list>
+                <v-divider class="my-2"></v-divider>
+
+                <v-list-item  
+                    @click="$emit('logout')"
+                    class="cursor-pointer"
+                    prepend-icon="mdi-logout"
+                >
+                    <v-list-item-title>
+                        Sair
+                    </v-list-item-title>
+                </v-list-item>
+            </v-list>
         </v-card>
     </v-menu>
 

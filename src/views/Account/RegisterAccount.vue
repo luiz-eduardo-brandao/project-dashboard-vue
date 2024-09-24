@@ -1,5 +1,5 @@
 <template>
-    <v-row justify="center" class="mt-10 pt-10">
+    <v-row justify="center" class="mt-10 pt-10 h-75">
         <v-col
             align-self="center"
             cols="12"
@@ -55,6 +55,7 @@
                                 block 
                                 color="deep-purple-darken-1"
                                 :loading="loginLoading"
+                                size="large"
                             >Criar Conta</v-btn>
                         </v-row>
                     </v-card-actions>

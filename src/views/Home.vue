@@ -1,10 +1,85 @@
 <template>
     <div>
-        <h1 class="mb-6">Dashboard</h1>
+        <h1 class="mb-6">Bem-vindo!</h1>
+
+        <v-row class="mb-10">
+          <v-col cols="12" md="7">
+            <v-card
+              class="mx-auto text-center"
+              color="blue"
+              max-width="600"
+              dark
+            >
+              <v-card-text>
+                <v-sheet color="rgba(0, 0, 0, .12)">
+                  <v-sparkline
+                    :model-value="values"
+                    color="rgba(255, 255, 255, .7)"
+                    height="100"
+                    padding="24"
+                    stroke-linecap="round"
+                    smooth
+                  >
+                    <template v-slot:label="item">
+                      {{ item.value }} 
+                    </template>  
+                  </v-sparkline>
+                </v-sheet>
+              </v-card-text>
+
+              <v-card-text>
+                <div class="text-h4 font-weight-thin">
+                  Tarefas Concluídas
+                </div>
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions class="justify-center">
+                <v-btn
+                  variant="text"
+                  block
+                >
+                  Ir para o Relatório
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+          <div>
+            <v-row justify="center">
+              <v-col cols="6" md="6" sm="6">Projetos: 1</v-col>
+              <v-col cols="6" md="6" sm="6">Tarefas: 10</v-col>
+            </v-row>
+          </div>
+        </v-row>
+
+        <v-row class="mb-10">
+          <v-col>
+            <v-card>
+              <v-card-title>
+                Media Tempo 1 
+              </v-card-title>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card>
+              <v-card-title>
+                Media Tempo 2
+              </v-card-title>
+            </v-card>
+          </v-col>
+          <v-col>
+            <v-card>
+              <v-card-title>
+                Media Tempo 3
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
 
         <v-card flat class="border mb-6">
           <div class="d-flex justify-space-between">
-            <v-card-title>Útlimos usuários</v-card-title>
+            <v-card-title>Projetos</v-card-title>
             <v-card-title>
               <v-btn @click="isDialogOpen = !isDialogOpen" variant="tonal" size="small" color="warning">Adicionar Usuário</v-btn>
              
@@ -52,9 +127,8 @@
           <v-table>
             <thead>
               <tr>
-                <th>Nome</th>
+                <th>Título</th>
                 <th>Email</th>
-                <th>Cargo</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -63,11 +137,6 @@
                 <td>Fulano</td>
                 <td>fulano@gmail.com</td>
                 <td>
-                  <v-chip color="primary" variant="outlined" size="small">
-                    Admin
-                  </v-chip>
-                </td>
-                <td>
                   <v-btn variant="tonal" color="primary">Editar</v-btn>
                 </td>
               </tr>
@@ -75,22 +144,12 @@
                 <td>Edu</td>
                 <td>edu@gmail.com</td>
                 <td>
-                  <v-chip color="secondary" variant="outlined" size="small">
-                    Gerente
-                  </v-chip>
-                </td>          
-                <td>
                   <v-btn variant="tonal" color="primary">Editar</v-btn>
                 </td>
               </tr>
               <tr v-ripple>
                 <td>Alan</td>
                 <td>alan@gmail.com</td>
-                <td>
-                  <v-chip variant="outlined" size="small">
-                    Convidado
-                  </v-chip>
-                </td>
                 <td>
                   <v-btn variant="tonal" color="primary">Editar</v-btn>
                 </td>
@@ -223,6 +282,21 @@
 import { ref } from 'vue'
 
 let isDialogOpen = ref(false)
+
+let values = ref([
+  { mes: 'Jan', value: 12 },
+  { mes: 'Fev', value: 2 },
+  { mes: 'Mar', value: 10 },
+  { mes: 'Abr', value: 1 },
+  { mes: 'Mai', value: 20 },
+  { mes: 'Jun', value: 25 },
+  { mes: 'Jul', value: 12 },
+  { mes: 'Ago', value: 12 },
+  { mes: 'Set', value: 30 },
+  { mes: 'Out', value: 50 },
+  { mes: 'Nov', value: 67 },
+  { mes: 'Dec', value: 34 },
+])
 
 const nomeRules = ref([
   value => {
