@@ -43,7 +43,7 @@
                             <v-row justify="center">
                                 <v-checkbox 
                                     v-model="isPermanent"
-                                    label="Permancer Conectado?"
+                                    label="Permanecer Conectado?"
                                 ></v-checkbox>
                             </v-row>
                         </v-card-text>

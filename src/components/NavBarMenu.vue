@@ -2,7 +2,7 @@
     <v-menu>
         <template v-slot:activator="{ props }">
         <v-btn class="mr-7 pa-3" icon v-bind="props">
-            <v-badge content="2" color="red">
+            <v-badge :content="counter" color="red">
             <v-icon icon="mdi-bell-outline"></v-icon>
             </v-badge>
         </v-btn>
@@ -11,46 +11,32 @@
         <v-card 
             class="rounded-lg"
             min-width="300px" 
-            max-width="500px"
+            max-width="600px"
+            max-height="500px"
         >
             <v-card-title>
-                <span class="text-left text-grey text-subtitle-1">Notificações (2)</span>
+                <span class="text-left text-grey text-subtitle-1">Notificações ({{ counter }})</span>
             </v-card-title>
             
             <v-divider></v-divider>
             
             <v-list>
-                <v-list-item
-                    prepend-icon="mdi-bell-outline" 
-                    append-icon="mdi-email-open"
-                    class="my-2"
-                    to="/notificacao"
-                >
-                    <v-list-item-title class="text-h6">
-                        Vuetify & Freeflow Jobs
-                    </v-list-item-title>
+                <div v-for="item in notificationsList" :key="item.id">
+                    <v-list-item
+                        :prepend-icon="item.prependIcon" 
+                        :append-icon="item.appendIcon"
+                        class="my-2 mx-2"
+                        :to="item.route"
+                    >
+                        <v-list-item-title class="text-h6">
+                            {{ item.title }}
+                        </v-list-item-title>
 
-                    <span class="text-subtitle-1 font-weight-light">
-                        fgefef fgefeffgefeffgefeffgefef fgefeffgefef
-                        fgefeffgefeffgefef fgefefv fgefef
-                    </span>
-                </v-list-item>
-
-                <v-divider></v-divider>
-
-                <v-list-item 
-                    prepend-icon="mdi-bell-outline" 
-                    append-icon="mdi-email-open"
-                    to="/notificacao"
-                >
-                    <v-list-item-title class="text-h6">
-                        Vuetify & Freeflow Jobs
-                    </v-list-item-title>
-                    <span class="text-subtitle-1 font-weight-light">
-                        fgefef fgefeffgefeffgefeffgefef fgefeffgefef
-                        fgefeffgefeffgefef fgefefv fgefef
-                    </span>
-                </v-list-item>
+                        <span class="text-subtitle-1 font-weight-light">
+                            {{ item.subtitle }}
+                        </span>
+                    </v-list-item>
+                </div>
             </v-list> 
         </v-card>
     </v-menu>
@@ -111,3 +97,14 @@
 
     <slot name="dialog"></slot>
 </template>
+
+<script setup>
+import { computed } from 'vue'
+import { useMenuStore } from '@/stores/MenuStore'
+
+const menuStore = useMenuStore()
+
+let notificationsList = computed(() => menuStore.getNotificationsList())
+
+let counter = computed(() => menuStore.getNotificationsList()?.length)
+</script>

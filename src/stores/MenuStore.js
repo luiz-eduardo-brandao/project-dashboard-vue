@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useMenuStore = defineStore('menu', () => {
-    let listaMenu = ref([
+    let menuList = ref([
         {
             id: 1,
             title: 'Home',
@@ -45,7 +45,7 @@ export const useMenuStore = defineStore('menu', () => {
         },
     ])
 
-    let listaMenuAdmin = ref([
+    let menuAdminList = ref([
         {
             id: 8,
             title: 'Usuários',
@@ -60,12 +60,57 @@ export const useMenuStore = defineStore('menu', () => {
         },
     ])
 
-    const getListaMenu = () => listaMenu.value
-    const getListaMenuAdmin = () => listaMenuAdmin.value
+    let notificationsList = ref([
+        {
+            id: 1,
+            title: 'Boas Vindas!',
+            subtitle: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc',
+            route: '/users',
+            prependIcon: 'mdi-bell-outline',
+            appendIcon: 'mdi-email-open'
+        },
+        {
+            id: 2,
+            title: 'Vuetify & Freeflow Jobs',
+            subtitle: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc',
+            route: '/users',
+            prependIcon: 'mdi-bell-outline',
+            appendIcon: 'mdi-email-open'
+        },
+        {
+            id: 3,
+            title: 'Vuetify & Freeflow Jobs',
+            subtitle: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc',
+            route: '/users',
+            prependIcon: 'mdi-bell-outline',
+            appendIcon: 'mdi-email-open'
+        },
+        {
+            id: 4,
+            title: 'Vuetify & Freeflow Jobs',
+            subtitle: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc',
+            route: '/users',
+            prependIcon: 'mdi-bell-outline',
+            appendIcon: 'mdi-email-open'
+        },
+        {
+            id: 5,
+            title: 'Vuetify & Freeflow Jobs',
+            subtitle: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc',
+            route: '/users',
+            prependIcon: 'mdi-bell-outline',
+            appendIcon: 'mdi-email-open'
+        },
+    ])
+
+    const getListaMenu = () => menuList.value
+    const getListaMenuAdmin = () => menuAdminList.value
+    const getNotificationsList = () => notificationsList.value
 
     return {
         getListaMenu,
-        getListaMenuAdmin
+        getListaMenuAdmin,
+        getNotificationsList
     }
 
 })
