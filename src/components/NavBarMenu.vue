@@ -9,9 +9,9 @@
         </template>
         
         <v-card 
-            class="rounded-lg"
-            min-width="300px" 
-            max-width="600px"
+            class="rounded-lg mx-3"
+            min-width="200px" 
+            max-width="550px"
             max-height="500px"
         >
             <v-card-title>
@@ -46,7 +46,7 @@
         <v-avatar v-bind="props" class="cursor-pointer mr-5">
             <v-img
             cover
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            src="../assets/user-edu.jpg"
             ></v-img>
         </v-avatar>  
         </template>
@@ -101,6 +101,12 @@
 <script setup>
 import { computed } from 'vue'
 import { useMenuStore } from '@/stores/MenuStore'
+
+let props = defineProps({
+    profileImg: {
+        type: String
+    }
+})
 
 const menuStore = useMenuStore()
 

@@ -3,111 +3,29 @@
         <h1>Projetos</h1>
         
         <v-divider class="my-6"></v-divider>
-    
-        <v-dialog 
-            v-model="isDialogOpen"
-            max-width="900"
-            class="rounded-md border"
-        >
-            <v-card>
-                <v-card-title class="mt-2">
-                    <span class="font-weight-light text-grey text-h6">Timeline: { titulo }</span>
-                </v-card-title>
-                <v-card-text>
-                    <v-timeline align="start" side="end">
-                        <v-timeline-item
-                            size="small"
-                        >
-                        <div class="d-flex font-weight-light">
-                            <div class="d-flex flex-column ">
-                                <span class="me-4">23/09/2024</span>
-                                <span class="me-4 font-weight-light">01:24</span>
-                            </div>
-                            <div>
-                            <strong>Projeto Criado</strong>
-                            <div class="text-caption">
-                                Projeto Validações - AR2024
-                            </div>
-                            </div>
-                        </div>
-                        </v-timeline-item>
 
-                        <v-timeline-item
-                            dot-color="blue"
-                            size="small"
-                        >
-                            <div class="d-flex font-weight-light">
-                                <div class="d-flex flex-column">
-                                    <span class="me-4">23/09/2024</span>
-                                    <span class="me-4 font-weight-light">02:20</span>
-                                </div>
-                                <div>
-                                <strong>Alteração</strong>
-                                <div class="text-caption">
-                                    Projeto Validações - AR2024
-                                </div>
-                                </div>
-                            </div>
-                        </v-timeline-item>
+        <TimeLine 
+            :isTimelineOpen="isTimelineOpen"
+            :projectTimeline="projectTimeline"
+            @close="closeTimeline()"   
+        />
 
-                        <v-timeline-item
-                        dot-color="pink"
-                        size="small"
-                        >
-                        <div class="d-flex font-weight-light">
-                            <div class="d-flex flex-column">
-                                    <span class="me-4">23/09/2024</span>
-                                    <span class="me-4 font-weight-light">02:20</span>
-                                </div>
-                                <div>
-                                <strong>Tarefa Adicionada</strong>
-                                <div class="text-caption">
-                                    Tarefa #1 - Desenvolver item 1
-                                </div>
-                            </div>
-                        </div>
-                        </v-timeline-item>
-
-                        <v-timeline-item
-                        dot-color="pink"
-                        size="small"
-                        >
-                        <div class="d-flex font-weight-light">
-                            <div class="d-flex flex-column">
-                                    <span class="me-4">23/09/2024</span>
-                                    <span class="me-4 font-weight-light">02:20</span>
-                                </div>
-                                <div>
-                                <strong>Tarefa Adicionada</strong>
-                                <div class="text-caption">
-                                    Tarefa #2 - Desenvolver item 1
-                                </div>
-                            </div>
-                        </div>
-                        </v-timeline-item>
-                    </v-timeline>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn 
-                        color="secondary" 
-                        variant="tonal" 
-                        @click="isDialogOpen = !isDialogOpen"
-                        class="ma-3"
-                    >Fechar</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+        <FormProject 
+            :isOpen="isFormProjectOpen"
+            :label="labelFormProject"
+            @close="isFormProjectOpen = !isFormProjectOpen"
+        />
 
         <v-card>
             <v-row class="d-flex justify-space-between pa-4">
                 <v-card-title>Lista de Projetos</v-card-title>
                 <v-card-title>
                     <v-btn 
-                        @click="isDialogOpen = !isDialogOpen"
+                        @click="openProjectForm('Adicionar Projeto', null)"
                         variant="tonal" 
                         size="small" 
-                        color="secondary"
-                    >Adicionar Projeto</v-btn>
+                        color="primary"
+                    >Novo Projeto</v-btn>
                 </v-card-title>
             </v-row>
     
@@ -126,12 +44,30 @@
                         ></v-rating>
                     </template>
 
+                    <template #item.tasks="{ item }">
+                        <v-btn 
+                        variant="tonal" 
+                        size="small" 
+                        color="primary"
+                        >
+                            Ir para Tarefas =>
+                        </v-btn>
+                    </template>
+
                     <template #item.actions="{ item }">
                         <v-btn 
                             icon="mdi-pencil"
                             color="primary"
                             class="rounded-7 ma-2"
                             variant="text"
+                            @click="openProjectForm('Editar Projeto', item)"
+                        ></v-btn>
+                        <v-btn 
+                            icon="mdi-history"
+                            color="primary"
+                            class="rounded-7 ma-2"
+                            variant="text"
+                            @click="openTimeline(item)"
                         ></v-btn>
                     </template>
                 </v-data-table>
@@ -141,19 +77,90 @@
 </template>
 
 <script setup>
-
 import { ref } from 'vue'
+import TimeLine from '@/components/TimeLine.vue'
+import FormProject from '@/components/project/FormProject.vue'
 
-let isDialogOpen = ref(false)
+let isTimelineOpen = ref(false)
+let projectTimeline = ref([])
+
+let isFormProjectOpen = ref(false)
+let labelFormProject = ref('')
+
+const openProjectForm = (label, project) => {
+
+    labelFormProject.value = label
+
+    if (project != null) {
+
+    }
+
+    isFormProjectOpen.value = !isFormProjectOpen.value
+}
+
+const openTimeline = (project) => {
+    console.log('get project timeline by id: ', project.id)
+
+    projectTimeline.value = [
+        {
+            id: 1,
+            projectId: project.id,
+            date: '20/09/2024',
+            hour: '10:00',
+            action: 'Inclusão',
+            title: project.title
+        },
+        {
+            id: 2,
+            projectId: project.id,
+            date: '21/09/2024',
+            hour: '9:22',
+            action: 'Alteração',
+            title: project.title
+        },
+        {
+            id: 3,
+            projectId: project.id,
+            date: '21/09/2024',
+            hour: '9:48',
+            action: 'Alteração',
+            title: project.title
+        },
+    ]
+
+    isTimelineOpen.value = !isTimelineOpen.value
+}
+
+const closeTimeline = () => {
+    isTimelineOpen.value = !isTimelineOpen.value
+
+    projectTimeline.value = []
+}
 
 let projects = ref([
     {
         id: 1,
+        title: 'Projeto Planejamento - AR23',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        level: 2 
+    },
+    {
+        id: 2,
+        title: 'Projeto Desenvolvimento - AR23',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        level: 4
+    },
+    {
+        id: 3,
         title: 'Projeto Validações - AR23',
         userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
         level: 3 
     },
 ])
+
 let headers = ref([
         {
         align: 'start',
@@ -162,8 +169,10 @@ let headers = ref([
         },
         { key: 'title', title: 'Título' },
         { key: 'userName', title: 'Usuário' },
+        { key: 'createdAt', title: 'Data Criação' },
         { key: 'level', title: 'Dificuldade' },
-        { key: 'actions', }
+        { key: 'tasks', },
+        { key: 'actions' }
     ])
 
 </script>

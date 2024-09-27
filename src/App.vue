@@ -17,7 +17,10 @@
         @toggleDrawer="openCloseDrawer" 
       >
         <template #nav-bar-menu>
-          <NavBarMenu @logout="logout">
+          <NavBarMenu 
+            :profileImg="user.image"
+            @logout="logout"
+          >
             <template #dialog>
               <Dialog 
                 :dialog="dialog" 
@@ -41,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from './stores/UserStore'
 
@@ -49,6 +52,8 @@ const router = useRouter()
 const callRoute = (routeName) => router.push(routeName)
 
 const userStore = useUserStore()
+
+let user = computed(() => userStore.getUser() )
 
 import Lobby from './views/Account/Lobby.vue'
 import Drawer from './components/Drawer.vue'

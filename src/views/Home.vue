@@ -2,80 +2,95 @@
     <div>
         <h1 class="mb-6">Bem-vindo!</h1>
 
-        <v-row class="mb-10">
-          <v-col cols="12" md="7">
-            <v-card
-              class="mx-auto text-center"
-              color="blue"
-              max-width="600"
-              dark
-            >
-              <v-card-text>
-                <v-sheet color="rgba(0, 0, 0, .12)">
-                  <v-sparkline
-                    :model-value="values"
-                    color="rgba(255, 255, 255, .7)"
-                    height="100"
-                    padding="24"
-                    stroke-linecap="round"
-                    smooth
+        <v-container>
+
+          <v-row class="mb-10">
+            <v-col cols="12" md="6">
+              <v-card
+                class="mx-auto text-center"
+                color="blue"
+                max-width="600"
+                dark
+              >
+                <v-card-text>
+                  <v-sheet color="rgba(0, 0, 0, .12)">
+                    <v-sparkline
+                      :model-value="values"
+                      color="rgba(255, 255, 255, .7)"
+                      height="100"
+                      padding="24"
+                      stroke-linecap="round"
+                      smooth
+                    >
+                      <template v-slot:label="item">
+                        {{ item.value }} 
+                      </template>  
+                    </v-sparkline>
+                  </v-sheet>
+                </v-card-text>
+  
+                <v-card-text>
+                  <div class="text-h4 font-weight-thin">
+                    Tarefas Concluídas
+                  </div>
+                </v-card-text>
+  
+                <v-divider></v-divider>
+  
+                <v-card-actions class="justify-center">
+                  <v-btn
+                    variant="text"
+                    block
                   >
-                    <template v-slot:label="item">
-                      {{ item.value }} 
-                    </template>  
-                  </v-sparkline>
-                </v-sheet>
-              </v-card-text>
-
-              <v-card-text>
-                <div class="text-h4 font-weight-thin">
-                  Tarefas Concluídas
-                </div>
-              </v-card-text>
-
-              <v-divider></v-divider>
-
-              <v-card-actions class="justify-center">
-                <v-btn
-                  variant="text"
-                  block
-                >
-                  Ir para o Relatório
-                </v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <div>
-            <v-row justify="center">
-              <v-col cols="6" md="6" sm="6">Projetos: 1</v-col>
-              <v-col cols="6" md="6" sm="6">Tarefas: 10</v-col>
-            </v-row>
-          </div>
-        </v-row>
-
-        <v-row class="mb-10">
-          <v-col>
-            <v-card>
-              <v-card-title>
-                Media Tempo 1 
-              </v-card-title>
-            </v-card>
-          </v-col>
-          <v-col>
-            <v-card>
-              <v-card-title>
-                Media Tempo 2
-              </v-card-title>
-            </v-card>
-          </v-col>
-          <v-col>
-            <v-card>
-              <v-card-title>
-                Media Tempo 3
-              </v-card-title>
-            </v-card>
-          </v-col>
-        </v-row>
+                    Ir para o Relatório
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-card
+                class="mx-auto text-center"
+                color="purple-darken-2"
+                max-width="600"
+                dark
+              >
+                <v-card-text>
+                  <v-sheet color="purple-darken-3">
+                    <v-sparkline
+                      :model-value="values"
+                      color="rgba(255, 255, 255, .7)"
+                      height="100"
+                      padding="24"
+                      stroke-linecap="round"
+                      smooth
+                    >
+                      <template v-slot:label="item">
+                        {{ item.value }} 
+                      </template>  
+                    </v-sparkline>
+                  </v-sheet>
+                </v-card-text>
+  
+                <v-card-text>
+                  <div class="text-h4 font-weight-thin">
+                    Tarefas Concluídas
+                  </div>
+                </v-card-text>
+  
+                <v-divider></v-divider>
+  
+                <v-card-actions class="justify-center">
+                  <v-btn
+                    variant="text"
+                    block
+                  >
+                    Ir para o Relatório
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-container>
 
         <v-card flat class="border mb-6">
           <div class="d-flex justify-space-between">

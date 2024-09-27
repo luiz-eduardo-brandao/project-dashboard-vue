@@ -157,7 +157,8 @@ const login = async () => {
             email: 'edu@gmail.com',
             role: 'Admin',
             accessToken: 'dfauwhdu12bn1u2bn12hn1ij21inm2i1n',
-            isPermanent: isPermanent.value
+            isPermanent: isPermanent.value,
+            image: '@/assets/user-edu.jpg'
         }
 
         setTimeout(() => {
