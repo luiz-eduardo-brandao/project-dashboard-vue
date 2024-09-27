@@ -18,7 +18,7 @@ export const useMenuStore = defineStore('menu', () => {
         {
             id: 3,
             title: 'Tarefas',
-            route: '',
+            route: '/tasks',
             icon: 'mdi-check-outline'
         },
         {

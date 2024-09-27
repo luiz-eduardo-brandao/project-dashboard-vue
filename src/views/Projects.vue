@@ -23,7 +23,6 @@
                     <v-btn 
                         @click="openProjectForm('Adicionar Projeto', null)"
                         variant="tonal" 
-                        size="small" 
                         color="primary"
                     >Novo Projeto</v-btn>
                 </v-card-title>
@@ -49,6 +48,7 @@
                         variant="tonal" 
                         size="small" 
                         color="primary"
+                        to="/tasks"
                         >
                             Ir para Tarefas =>
                         </v-btn>
@@ -115,6 +115,38 @@ const openTimeline = (project) => {
             projectId: project.id,
             date: '21/09/2024',
             hour: '9:22',
+            action: 'Alteração',
+            title: project.title
+        },
+        {
+            id: 3,
+            projectId: project.id,
+            date: '21/09/2024',
+            hour: '9:48',
+            action: 'Alteração',
+            title: project.title
+        },
+        {
+            id: 3,
+            projectId: project.id,
+            date: '21/09/2024',
+            hour: '9:48',
+            action: 'Alteração',
+            title: project.title
+        },
+        {
+            id: 3,
+            projectId: project.id,
+            date: '21/09/2024',
+            hour: '9:48',
+            action: 'Alteração',
+            title: project.title
+        },
+        {
+            id: 3,
+            projectId: project.id,
+            date: '21/09/2024',
+            hour: '9:48',
             action: 'Alteração',
             title: project.title
         },

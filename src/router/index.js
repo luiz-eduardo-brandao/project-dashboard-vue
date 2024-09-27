@@ -7,6 +7,7 @@ import RegisterAccount from '../views/Account/RegisterAccount.vue'
 import Home from '../views/Home.vue'
 import Users from '../views/Users.vue'
 import Projects from '../views/Projects.vue'
+import Tasks from '../views/Tasks.vue'
 import Profile from '../views/Profile.vue'
 
 const router = createRouter({
@@ -32,6 +33,14 @@ const router = createRouter({
             path: '/projects',
             name: 'projects',
             component: Projects,
+            meta: {
+                authorize: true
+            }
+        },
+        {
+            path: '/tasks',
+            name: 'tasks',
+            component: Tasks,
             meta: {
                 authorize: true
             }
