@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen">
-        <h1>Usuários</h1>
+        <h1 class="font-weight-light">Usuários</h1>
         
         <v-divider class="my-6"></v-divider>
     
