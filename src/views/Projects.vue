@@ -29,48 +29,54 @@
             </v-row>
     
             <v-card-text>
-                <v-data-table
-                    :headers="headers"
-                    :items="projects"
-                >
-                    <template #item.level="{ item }">
-                        <v-rating
-                        :model-value="item.level"
-                        color="orange-darken-2"
-                        density="compact"
-                        size="small"
-                        readonly
-                        ></v-rating>
-                    </template>
-
-                    <template #item.tasks="{ item }">
-                        <v-btn 
-                        variant="tonal" 
-                        size="small" 
-                        color="primary"
-                        to="/tasks"
-                        >
-                            Ir para Tarefas =>
-                        </v-btn>
-                    </template>
-
-                    <template #item.actions="{ item }">
-                        <v-btn 
-                            icon="mdi-pencil"
-                            color="primary"
-                            class="rounded-7 ma-2"
-                            variant="text"
+                <v-table>
+                    <thead>
+                        <tr>
+                            <th v-for="header in headers" :key="header.key">
+                                {{ header.title }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr 
+                            class="cursor-pointer table-line"
+                            v-ripple
+                            v-for="item in projects"
+                            :key="item.id"
                             @click="openProjectForm('Editar Projeto', item)"
-                        ></v-btn>
-                        <v-btn 
-                            icon="mdi-history"
-                            color="primary"
-                            class="rounded-7 ma-2"
-                            variant="text"
-                            @click="openTimeline(item)"
-                        ></v-btn>
-                    </template>
-                </v-data-table>
+                        >
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.title }}</td>
+                            <td>{{ item.userName }}</td>
+                            <td>{{ item.createdAt }}</td>
+                            <td>
+                                <v-rating
+                                :model-value="item.level"
+                                color="orange-darken-2"
+                                density="compact"
+                                size="small"
+                                readonly
+                                ></v-rating>
+                            </td>
+                            <td>
+                                <v-btn 
+                                variant="tonal" 
+                                color="primary"
+                                to="/tasks"
+                                >Tarefas</v-btn>
+                            </td>
+                            <td>
+                                <v-btn 
+                                icon="mdi-history"
+                                color="primary"
+                                class="rounded-7 ma-2"
+                                variant="text"
+                                @click.stop="openTimeline(item)"
+                                ></v-btn>
+                            </td>
+                        </tr>
+                    </tbody>
+                </v-table>
             </v-card-text>
         </v-card>
     </div>
@@ -208,3 +214,11 @@ let headers = ref([
     ])
 
 </script>
+
+<style>
+
+.table-line:hover {
+    background-color: #424242;
+}
+
+</style>

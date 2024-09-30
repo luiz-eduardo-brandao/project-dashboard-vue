@@ -27,6 +27,7 @@
                         :append-icon="item.appendIcon"
                         class="my-2 mx-2"
                         :to="item.route"
+                        @click="scrollToTop"
                     >
                         <v-list-item-title class="text-h6">
                             {{ item.title }}
@@ -55,6 +56,7 @@
             <v-list :lines="false" density="compact" nav>
                 <v-list-item 
                     to="/profile"
+                    @click="scrollToTop"
                     prepend-icon="mdi-account-outline"
                 >
                     <v-list-item-title>
@@ -64,6 +66,7 @@
 
                 <v-list-item 
                     to="/favoritos"
+                    @click="scrollToTop"
                     prepend-icon="mdi-star-outline"
                 >
                     <v-list-item-title>
@@ -73,6 +76,7 @@
 
                 <v-list-item 
                     to="/settings"
+                    @click="scrollToTop"
                     prepend-icon="mdi-cog"
                 >
                     <v-list-item-title>
@@ -113,4 +117,6 @@ const menuStore = useMenuStore()
 let notificationsList = computed(() => menuStore.getNotificationsList())
 
 let counter = computed(() => menuStore.getNotificationsList()?.length)
+
+const scrollToTop = () => window.scrollTo(0, 0);
 </script>

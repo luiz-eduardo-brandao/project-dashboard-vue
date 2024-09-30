@@ -33,7 +33,7 @@
       </NavBar>
 
       <v-main>
-        <v-container max-width="90%" class="h-100">
+        <v-container max-width="90%" min-height="h-screen" class="">
             <RouterView />
         </v-container>
         

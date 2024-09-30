@@ -26,7 +26,10 @@
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const callRoute = (routeName) => router.push(routeName)
+const callRoute = (routeName) => {
+  router.push(routeName)
+  window.scrollTo(0, 0);
+}
 
 let props = defineProps({
     isDrawerOpen: {

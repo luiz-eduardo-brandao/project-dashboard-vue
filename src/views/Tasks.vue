@@ -1,11 +1,11 @@
 <template>
-    <div class="h-screen">
+    <div class="h-100 mb-10">
         <h1 class="font-weight-light">Suas Tarefas!</h1>
         
         <v-divider class="my-6"></v-divider>
         
         <v-container>
-            <v-row class="">
+            <v-row justify="center">
                 <v-text-field 
                     class="px-3 mx-2"
                     label="Pesquisar"
@@ -23,7 +23,7 @@
                 <v-spacer></v-spacer>
                 <div class="d-flex justify-center ">
                     <v-btn align="center"
-                        class="mt-2 mr-3"
+                        class="mt-3 mr-3"
                         variant="tonal" 
                         color="primary"
                     >
@@ -32,6 +32,7 @@
                     <div class="d-flex justify-center flex-column mx-4 text-subtitle-2 font-weight-light">
                         <v-switch 
                             v-model="listType"
+                            @click="store.setListType()"
                             theme="light"
                             color="purple-darken-2"
                             base-color="blue"
@@ -49,7 +50,7 @@
         <div class="mt-5">
             <v-row v-if="!listType">
                 <v-col
-                    v-for="i in 5"
+                    v-for="i in 30"
                     :key="i"
                     cols="12" sm="6" md="4" lg="3"
                 >
@@ -93,7 +94,6 @@
                 </v-col>
             </v-row>
             <v-row v-else>  
-                <v-container>
                     <v-col cols="12">
                         <v-card>
                             <v-row class="d-flex pa-4">
@@ -101,18 +101,115 @@
                             </v-row>
                 
                             <v-card-text>
-                                <v-data-table></v-data-table>
+                                <v-table>
+                                    <thead>
+                                        <tr>
+                                            <th v-for="header in taskListHeader" :key="header.key">
+                                                {{ header.title }}
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr 
+                                            class="cursor-pointer table-line"
+                                            v-ripple
+                                            v-for="item in taskList"
+                                            :key="item.id"
+                                        >
+                                            <td>{{ item.id }}</td>
+                                            <td>{{ item.title }}</td>
+                                            <td>{{ item.projectTitle }}</td>
+                                            <td>{{ item.timeConsumed }}</td>
+                                            <td>{{ item.startDate }}</td>
+                                            <td>{{ item.endDate }}</td>
+                                           
+                                            <td>
+                                                <v-btn 
+                                                    icon="mdi-play-circle-outline"
+                                                    color="primary"
+                                                    class="rounded-7 ma-2"
+                                                    variant="text"
+                                                    :disabled="item.startDate"
+                                                ></v-btn>
+                                                <v-btn 
+                                                    icon="mdi-stop-circle-outline"
+                                                    color="red"
+                                                    class="rounded-7 ma-2"
+                                                    variant="text"
+                                                    :disabled="item.endDate"
+                                                ></v-btn>
+                                            <!-- </td> -->
+                                            
+                                            <!-- <td> -->
+                                                <v-btn 
+                                                icon="mdi-history"
+                                                color="primary"
+                                                class="rounded-7 ma-2"
+                                                variant="text"
+                                                @click.stop="openTimeline(item)"
+                                                ></v-btn>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </v-table>
                             </v-card-text>
                         </v-card>
-                    </v-col>              
-                </v-container>
+                    </v-col>         
             </v-row>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useTaskStore } from '@/stores/TaskStore'
 
-let listType = ref(false)
+const store = useTaskStore()
+
+let listType = computed(() => store.getListType() )
+
+let taskList = ref([
+    {
+        id: 1,
+        title: 'Desenvolver rota de login',
+        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
+        projectId: 1,
+        projectTitle: 'Projeto Desenvolvimento - AR23',
+        timeConsumed: '01:00',
+    },
+    {
+        id: 2,
+        title: 'Desenvolver rota de login',
+        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
+        projectId: 1,
+        projectTitle: 'Projeto Desenvolvimento - AR23',
+        timeConsumed: '01:00',
+        startDate: '27/09/2024 03:00',
+    },
+    {
+        id: 3,
+        title: 'Desenvolver rota de login',
+        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
+        projectId: 1,
+        projectTitle: 'Projeto Desenvolvimento - AR23',
+        timeConsumed: '01:00',
+        startDate: '27/09/2024 03:00',
+        endDate: '27/09/2024 03:00'
+    }
+])
+
+let taskListHeader = ref([
+    {
+    align: 'start',
+    key: 'id',
+    title: 'Id',
+    },
+    { key: 'projectTitle', title: 'Projeto' },
+    { key: 'title', title: 'Tarefa' },
+    { key: 'timeConsumed', title: 'Tempo Gasto' },
+    { key: 'startDate', title: 'Início' },
+    { key: 'endDate', title: 'Fim' },
+    { key: 'actions', },
+    { key: 'timeline' }
+])
 </script>

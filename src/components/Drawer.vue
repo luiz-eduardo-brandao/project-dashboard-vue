@@ -21,6 +21,7 @@
               v-if="!item.subMenu"
               :prepend-icon="item.icon" 
               :to="item.route"
+              @click="scrollToTop"
             >{{ item.title }}</v-list-item>
 
             <v-list-group 
@@ -52,6 +53,7 @@
             <v-list-item 
               :prepend-icon="item.icon" 
               :to="item.route"
+              @click="scrollToTop"
             >{{ item.title }}</v-list-item>
           </div>
         </div>
@@ -87,5 +89,7 @@ let props = defineProps({
         type: Boolean
     }
 })
+
+const scrollToTop = () => window.scrollTo(0, 0);
 
 </script>
