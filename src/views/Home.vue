@@ -1,300 +1,154 @@
 <template>
     <div>
-        <h1 class="mb-6">Bem-vindo!</h1>
+        <h1 class="font-weight-light mb-6">
+          <span v-if="user">Bem-vindo de volta, {{ user.nome }}!</span>
+          <span v-else>Bem-vindo!</span>
+        </h1>
+        
+     
+        
+        <h2 class="font-weight-light mt-10 mb-2">Projeto recentes:</h2>
+        <v-divider class="mb-10"></v-divider>
 
-        <v-container>
-
-          <v-row class="mb-10">
-            <v-col cols="12" md="6">
-              <v-card
-                class="mx-auto text-center"
-                color="blue"
-                max-width="600"
-                dark
+        <v-row justify="center" class="mt-6 mb-10">
+          <v-slide-group
+            class="pa-4"
+            center-active
+            show-arrows
+            max-width="800"
+          >
+            <v-slide-group-item
+              v-for="project in recentProjects" :key="project.id" 
+              v-ripple
+            >
+              <v-card 
+                flat 
+                v-ripple
+                min-width="300"
+                class="border cursor-pointer mx-3" 
               >
+                <v-img 
+                  class="align-end text-white border-rounded"
+                  :src="project.image"
+                  cover
+                  
+                  min-width="300"
+                  max-height="220"
+                  max-width="280"
+                >
+                  <v-card-title class="bg-black text-overline ext-medium-emphasis
+                  text-wrap">{{ project.title }}</v-card-title>
+                </v-img>
+                
+                <v-card-subtitle class="pt-3 text-wrap">
+                  {{ project.userName }}
+                </v-card-subtitle>
+
                 <v-card-text>
-                  <v-sheet color="rgba(0, 0, 0, .12)">
-                    <v-sparkline
-                      :model-value="values"
-                      color="rgba(255, 255, 255, .7)"
-                      height="100"
-                      padding="24"
-                      stroke-linecap="round"
-                      smooth
-                    >
-                      <template v-slot:label="item">
-                        {{ item.value }} 
-                      </template>  
-                    </v-sparkline>
-                  </v-sheet>
+                  <v-rating
+                    :model-value="project.level"
+                    color="orange-darken-2"
+                    density="compact"
+                    size="small"
+                    readonly
+                  ></v-rating>
+
+                  <div class="mt-4">{{ project.description }}</div>
                 </v-card-text>
-  
-                <v-card-text>
-                  <div class="text-h4 font-weight-thin">
-                    Tarefas Concluídas
-                  </div>
+
+                <v-card-text class="text-wrap">
                 </v-card-text>
-  
-                <v-divider></v-divider>
-  
-                <v-card-actions class="justify-center">
-                  <v-btn
-                    variant="text"
-                    block
-                  >
-                    Ir para o Relatório
-                  </v-btn>
+
+                <v-card-actions>
+                  <v-btn variant="outlined" color="primary">Editar</v-btn>
+                  <v-btn append-icon="mdi-calendar-check"  variant="tonal" color="blue">Tarefas</v-btn>
                 </v-card-actions>
               </v-card>
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-card
-                class="mx-auto text-center"
-                color="purple-darken-2"
-                max-width="600"
-                dark
-              >
-                <v-card-text>
-                  <v-sheet color="purple-darken-3">
-                    <v-sparkline
-                      :model-value="values"
-                      color="rgba(255, 255, 255, .7)"
-                      height="100"
-                      padding="24"
-                      stroke-linecap="round"
-                      smooth
-                    >
-                      <template v-slot:label="item">
-                        {{ item.value }} 
-                      </template>  
-                    </v-sparkline>
-                  </v-sheet>
-                </v-card-text>
-  
-                <v-card-text>
-                  <div class="text-h4 font-weight-thin">
-                    Tarefas Concluídas
-                  </div>
-                </v-card-text>
-  
-                <v-divider></v-divider>
-  
-                <v-card-actions class="justify-center">
-                  <v-btn
-                    variant="text"
-                    block
-                  >
-                    Ir para o Relatório
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-col>
-          </v-row>
-        </v-container>
+            </v-slide-group-item>
+          </v-slide-group>
 
-        <v-card flat class="border mb-6">
-          <div class="d-flex justify-space-between">
-            <v-card-title>Projetos</v-card-title>
-            <v-card-title>
-              <v-btn @click="isDialogOpen = !isDialogOpen" variant="tonal" size="small" color="warning">Adicionar Usuário</v-btn>
-             
-              <v-dialog width="50%" v-model="isDialogOpen">
-                <v-card>
-                  <v-card-title>
-                    <span class="font-weight-light text-grey text-h6">Adicionar Usuário</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-row>
-                      <v-col>
-                        <v-text-field 
-                          label="Nome" 
-                          variant="outlined"
-                          :rules="nomeRules"
-                        ></v-text-field>
-                      </v-col>
-
-                      <v-col>
-                        <v-text-field 
-                          label="Email" 
-                          variant="outlined"
-                          :rules="emailRules"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-
-                    <v-select
-                      class="mt-5"
-                      label="Cargo"
-                      variant="outlined"
-                      :items="['Admin', 'Gerente', 'Convidado']"
-                    ></v-select>
-
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn variant="text" @click="isDialogOpen = !isDialogOpen">Cancelar</v-btn>
-                      <v-btn variant="tonal" color="success" @click="isDialogOpen = !isDialogOpen">Salvar</v-btn>
-                    </v-card-actions>
-                  </v-card-text>
-                </v-card>
-              </v-dialog>
-            </v-card-title>
-          </div>
-          <v-table>
-            <thead>
-              <tr>
-                <th>Título</th>
-                <th>Email</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-ripple>
-                <td>Fulano</td>
-                <td>fulano@gmail.com</td>
-                <td>
-                  <v-btn variant="tonal" color="primary">Editar</v-btn>
-                </td>
-              </tr>
-              <tr v-ripple>
-                <td>Edu</td>
-                <td>edu@gmail.com</td>
-                <td>
-                  <v-btn variant="tonal" color="primary">Editar</v-btn>
-                </td>
-              </tr>
-              <tr v-ripple>
-                <td>Alan</td>
-                <td>alan@gmail.com</td>
-                <td>
-                  <v-btn variant="tonal" color="primary">Editar</v-btn>
-                </td>
-              </tr>
-            </tbody>
-          </v-table>
-        </v-card>
-
-        <v-row class="mt-6">
-          <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-            <v-card flat class="border" v-ripple>
+          <!-- <v-col 
+            v-for="project in recentProjects" :key="project.id" 
+            cols="12" sm="6" md="4" lg="3" xl="2">
+            <v-card flat class="border cursor-pointer" v-ripple>
               <v-img 
-                class="align-end text-white"
-                src="https://images.pexels.com/photos/28225012/pexels-photo-28225012/free-photo-of-mar-cidade-meio-urbano-panorama.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                class="align-end text-white border-rounded"
+                :src="project.image"
                 cover
+                max-height="220"
               >
-                <v-card-title>Top 10 Praias no Brasil</v-card-title>
+                <v-card-title class="bg-black text-overline ext-medium-emphasis
+                text-wrap">{{ project.title }}</v-card-title>
               </v-img>
               
-              <v-card-subtitle class="pt-3">Salvador</v-card-subtitle>
+              <v-card-subtitle class="pt-3 text-wrap">
+                {{ project.userName }}
+              </v-card-subtitle>
 
-              <v-card-text>
-                <div>Rio Vermelho</div>
-                <div>Lorem, ipsum dor sit ameet </div>
+              <v-card-text class="text-wrap">
+                <div>{{ project.description }}</div>
               </v-card-text>
 
               <v-card-actions>
-                <v-btn variant="outlined" color="primary">Ver mais</v-btn>
-                <v-btn prepend-icon="mdi-cart"  variant="tonal" color="blue">Comprar</v-btn>
+                <v-btn variant="outlined" color="primary">Editar</v-btn>
+                <v-btn append-icon="mdi-calendar-check"  variant="tonal" color="blue">Tarefas</v-btn>
               </v-card-actions>
             </v-card>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-            <v-card flat class="border" v-ripple>
-              <v-img 
-                class="align-end text-white"
-                src="https://images.pexels.com/photos/28225012/pexels-photo-28225012/free-photo-of-mar-cidade-meio-urbano-panorama.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                cover
-              >
-                <v-card-title>Top 10 Praias no Brasil</v-card-title>
-              </v-img>
-              
-              <v-card-subtitle class="pt-3">Salvador</v-card-subtitle>
-
-              <v-card-text>
-                <div>Rio Vermelho</div>
-                <div>Lorem, ipsum dor sit ameet</div>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn variant="outlined" color="primary">Ver mais</v-btn>
-                <v-btn prepend-icon="mdi-cart" variant="tonal" color="blue">Comprar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-            <v-card flat class="border" v-ripple>
-              <v-img 
-                class="align-end text-white"
-                src="https://images.pexels.com/photos/28225012/pexels-photo-28225012/free-photo-of-mar-cidade-meio-urbano-panorama.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                cover
-              >
-                <v-card-title>Top 10 Praias no Brasil</v-card-title>
-              </v-img>
-              
-              <v-card-subtitle class="pt-3">Salvador</v-card-subtitle>
-
-              <v-card-text>
-                <div>Rio Vermelho</div>
-                <div>Lorem, ipsum dor sit ameet</div>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn variant="outlined" color="primary">Ver mais</v-btn>
-                <v-btn prepend-icon="mdi-cart" variant="tonal" color="blue">Comprar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-            <v-card flat class="border" v-ripple>
-              <v-img 
-                class="align-end text-white"
-                src="https://images.pexels.com/photos/28225012/pexels-photo-28225012/free-photo-of-mar-cidade-meio-urbano-panorama.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                cover
-              >
-                <v-card-title>Top 10 Praias no Brasil</v-card-title>
-              </v-img>
-              
-              <v-card-subtitle class="pt-3">Salvador</v-card-subtitle>
-
-              <v-card-text>
-                <div>Rio Vermelho</div>
-                <div>Lorem, ipsum dor sit ameet</div>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn variant="outlined" color="primary">Ver mais</v-btn>
-                <v-btn prepend-icon="mdi-cart" variant="tonal" color="blue">Comprar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
-          <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-            <v-card flat class="border" v-ripple>
-              <v-img 
-                class="align-end text-white"
-                src="https://images.pexels.com/photos/28225012/pexels-photo-28225012/free-photo-of-mar-cidade-meio-urbano-panorama.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                cover
-              >
-                <v-card-title>Top 10 Praias no Brasil</v-card-title>
-              </v-img>
-              
-              <v-card-subtitle class="pt-3">Salvador</v-card-subtitle>
-
-              <v-card-text>
-                <div>Rio Vermelho</div>
-                <div>Lorem, ipsum dor sit ameet</div>
-              </v-card-text>
-
-              <v-card-actions>
-                <v-btn variant="outlined" color="primary">Ver mais</v-btn>
-                <v-btn prepend-icon="mdi-cart" variant="tonal" color="blue">Comprar</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-col>
+          </v-col> -->
         </v-row>    
+
+        
+        <h2 class="font-weight-light mt-10 mb-2">Tarefas em andamento:</h2>
+        <v-divider class="mb-10"></v-divider>
+
+        <v-card class="mb-10">
+          <v-card-text>
+            <v-table>
+                <thead>
+                    <tr>
+                        <th v-for="header in taskListHeader" :key="header.key">
+                            {{ header.title }}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr 
+                        class="cursor-pointer table-line"
+                        v-ripple
+                        v-for="item in taskList"
+                        :key="item.id"
+                    >
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.title }}</td>
+                        <td>{{ item.projectTitle }}</td>
+                        <td>{{ item.timeConsumed }}</td>
+                        <td>{{ item.startDate }}</td>
+                        <td>{{ item.endDate }}</td>
+                        
+                    </tr>
+                </tbody>
+            </v-table>
+        </v-card-text>
+      </v-card>
+
+      <br>
+      <br>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useUserStore } from '@/stores/UserStore'
+
+const userStore = useUserStore()
+
+let user = computed(() => {
+  let result = userStore.getUser()
+
+  if (result) return result
+
+  return null
+}) 
 
 let isDialogOpen = ref(false)
 
@@ -337,6 +191,96 @@ const emailRules = ref([
 
     return 'Email inválido'
   }
+])
+
+let recentProjects = ref([
+    {
+        id: 1,
+        title: 'Projeto Planejamento - AR23',
+        description: 'Planejamento projetos 2024 - Outubro',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        image: 'https://images.pexels.com/photos/28518085/pexels-photo-28518085.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        level: 2 
+    },
+    {
+        id: 2,
+        title: 'Projeto Desenvolvimento - AR23',
+        description: 'Desenvolvimento atividades',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        image: 'https://images.pexels.com/photos/28770118/pexels-photo-28770118/free-photo-of-futuro.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        level: 4
+    },
+    {
+        id: 3,
+        title: 'Projeto Validações - AR23',
+        description: 'Validações',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        image: 'https://images.pexels.com/photos/28751787/pexels-photo-28751787/free-photo-of-cena-de-rua-encantadora-em-hanoi-vietna.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        level: 3 
+    },
+    {
+        id: 3,
+        title: 'Projeto Validações - AR23',
+        description: 'Validações',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        image: 'https://images.pexels.com/photos/28751787/pexels-photo-28751787/free-photo-of-cena-de-rua-encantadora-em-hanoi-vietna.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        level: 3 
+    },
+    {
+        id: 3,
+        title: 'Projeto Validações - AR23',
+        description: 'Validações',
+        userName: 'Eduardo',
+        createdAt: '26/09/2024 9:40 PM',
+        image: 'https://images.pexels.com/photos/28751787/pexels-photo-28751787/free-photo-of-cena-de-rua-encantadora-em-hanoi-vietna.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        level: 3 
+    },
+])
+
+let taskList = ref([
+    {
+        id: 1,
+        title: 'Desenvolver rota de login',
+        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
+        projectId: 1,
+        projectTitle: 'Projeto Desenvolvimento - AR23',
+        timeConsumed: '01:00',
+        startDate: '27/09/2024 03:00',
+    },
+    {
+        id: 2,
+        title: 'Desenvolver rota de login',
+        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
+        projectId: 1,
+        projectTitle: 'Projeto Desenvolvimento - AR23',
+        timeConsumed: '01:00',
+        startDate: '27/09/2024 03:00',
+    },
+    {
+        id: 3,
+        title: 'Desenvolver rota de login',
+        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
+        projectId: 1,
+        projectTitle: 'Projeto Desenvolvimento - AR23',
+        timeConsumed: '01:00',
+        startDate: '27/09/2024 03:00',
+    }
+])
+
+let taskListHeader = ref([
+    {
+    align: 'start',
+    key: 'id',
+    title: 'Id',
+    },
+    { key: 'projectTitle', title: 'Projeto' },
+    { key: 'title', title: 'Tarefa' },
+    { key: 'timeConsumed', title: 'Tempo Gasto' },
+    { key: 'startDate', title: 'Início' },
 ])
 
 </script>

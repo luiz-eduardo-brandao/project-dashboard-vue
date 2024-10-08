@@ -9,6 +9,7 @@ import Users from '../views/Users.vue'
 import Projects from '../views/Projects.vue'
 import Tasks from '../views/Tasks.vue'
 import Profile from '../views/Profile.vue'
+import EditProject from '@/views/Project/EditProject.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,14 @@ const router = createRouter({
             path: '/projects',
             name: 'projects',
             component: Projects,
+            meta: {
+                authorize: true
+            }
+        },
+        {
+            path: '/project',
+            name: 'project',
+            component: EditProject,
             meta: {
                 authorize: true
             }

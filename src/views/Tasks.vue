@@ -131,6 +131,8 @@
                                                     variant="text"
                                                     :disabled="item.startDate"
                                                 ></v-btn>
+                                            </td>
+                                            <td>
                                                 <v-btn 
                                                     icon="mdi-stop-circle-outline"
                                                     color="red"
@@ -138,8 +140,9 @@
                                                     variant="text"
                                                     :disabled="item.endDate"
                                                 ></v-btn>
+                                            </td>
                                             <!-- </td> -->
-                                            
+                                            <td>
                                             <!-- <td> -->
                                                 <v-btn 
                                                 icon="mdi-history"
@@ -209,7 +212,8 @@ let taskListHeader = ref([
     { key: 'timeConsumed', title: 'Tempo Gasto' },
     { key: 'startDate', title: 'Início' },
     { key: 'endDate', title: 'Fim' },
-    { key: 'actions', },
-    { key: 'timeline' }
+    { key: 'start', title: 'Iniciar' },
+    { key: 'pause', title: 'Pausar'},
+    { key: 'timeline', title: 'Histórico'}
 ])
 </script>
