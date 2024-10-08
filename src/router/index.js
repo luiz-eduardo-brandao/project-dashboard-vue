@@ -10,6 +10,8 @@ import Projects from '../views/Projects.vue'
 import Tasks from '../views/Tasks.vue'
 import Profile from '../views/Profile.vue'
 import EditProject from '@/views/Project/EditProject.vue'
+import NewProject from '@/views/Project/NewProject.vue'
+import NewTask from '@/views/Task/NewTask.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,9 +49,25 @@ const router = createRouter({
             }
         },
         {
+            path: '/new-project',
+            name: 'newProject',
+            component: NewProject,
+            meta: {
+                authorize: true
+            }
+        },
+        {
             path: '/tasks',
             name: 'tasks',
             component: Tasks,
+            meta: {
+                authorize: true
+            }
+        },
+        {
+            path: '/new-task',
+            name: 'newTask',
+            component: NewTask,
             meta: {
                 authorize: true
             }

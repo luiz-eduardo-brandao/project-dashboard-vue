@@ -7,7 +7,7 @@
         
      
         
-        <h2 class="font-weight-light mt-10 mb-2">Projeto recentes:</h2>
+        <h2 class="font-weight-light mt-10 mb-2">Projetos recentes:</h2>
         <v-divider class="mb-10"></v-divider>
 
         <v-row justify="center" class="mt-6 mb-10">
@@ -18,7 +18,8 @@
             max-width="800"
           >
             <v-slide-group-item
-              v-for="project in recentProjects" :key="project.id" 
+              v-for="project in recentProjects" 
+              :key="project.id" 
               v-ripple
             >
               <v-card 
@@ -26,6 +27,7 @@
                 v-ripple
                 min-width="300"
                 class="border cursor-pointer mx-3" 
+                @click="openProject(project)"
               >
                 <v-img 
                   class="align-end text-white border-rounded"
@@ -41,27 +43,38 @@
                 </v-img>
                 
                 <v-card-subtitle class="pt-3 text-wrap">
-                  {{ project.userName }}
+                  <div class="d-flex">
+                    {{ project.userName }}
+                    <v-spacer></v-spacer>
+                    <v-rating
+                      :model-value="project.level"
+                      color="orange-darken-2"
+                      density="compact"
+                      size="small"
+                      readonly
+                    ></v-rating>
+                  </div>
                 </v-card-subtitle>
 
                 <v-card-text>
-                  <v-rating
-                    :model-value="project.level"
-                    color="orange-darken-2"
-                    density="compact"
-                    size="small"
-                    readonly
-                  ></v-rating>
-
-                  <div class="mt-4">{{ project.description }}</div>
+                  <div>{{ project.description }}</div>
                 </v-card-text>
 
                 <v-card-text class="text-wrap">
                 </v-card-text>
 
                 <v-card-actions>
-                  <v-btn variant="outlined" color="primary">Editar</v-btn>
-                  <v-btn append-icon="mdi-calendar-check"  variant="tonal" color="blue">Tarefas</v-btn>
+                  <v-btn 
+                    variant="outlined" 
+                    color="primary"
+                    @click.stop="openProject(project)"
+                  >Editar</v-btn>
+                  <v-btn 
+                    append-icon="mdi-calendar-check" 
+                    variant="tonal" 
+                    color="blue"
+                    @click.stop="callRoute('/tasks')"
+                  >Tarefas</v-btn>
                 </v-card-actions>
               </v-card>
             </v-slide-group-item>
@@ -138,9 +151,19 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/UserStore'
+import { useProjectStore } from '@/stores/ProjectStore'
 
 const userStore = useUserStore()
+const projectStore = useProjectStore()
+
+const router = useRouter()
+
+const callRoute = (routeName) => {
+  router.push(routeName)
+  window.scrollTo(0, 0);
+}
 
 let user = computed(() => {
   let result = userStore.getUser()
@@ -150,48 +173,13 @@ let user = computed(() => {
   return null
 }) 
 
+const openProject = (project) => {
+  projectStore.setProjectSelected(project)
+
+  callRoute('/project')
+}
+
 let isDialogOpen = ref(false)
-
-let values = ref([
-  { mes: 'Jan', value: 12 },
-  { mes: 'Fev', value: 2 },
-  { mes: 'Mar', value: 10 },
-  { mes: 'Abr', value: 1 },
-  { mes: 'Mai', value: 20 },
-  { mes: 'Jun', value: 25 },
-  { mes: 'Jul', value: 12 },
-  { mes: 'Ago', value: 12 },
-  { mes: 'Set', value: 30 },
-  { mes: 'Out', value: 50 },
-  { mes: 'Nov', value: 67 },
-  { mes: 'Dec', value: 34 },
-])
-
-const nomeRules = ref([
-  value => {
-    if (value) return true
-
-    return 'Informe o nome.'
-  },
-  value => {
-    if (value?.length > 2) return true
-
-    return 'O nome de ter mais de 2 caracteres.'
-  }
-])
-
-const emailRules = ref([
-  value => {
-    if (value) return true
-
-    return 'O email é obrigatório'
-  },
-  value => {
-    if (value.includes('@')) return true
-
-    return 'Email inválido'
-  }
-])
 
 let recentProjects = ref([
     {

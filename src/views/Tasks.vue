@@ -26,6 +26,7 @@
                         class="mt-3 mr-3"
                         variant="tonal" 
                         color="primary"
+                        to="/new-task"
                     >
                         Nova Tarefa <v-icon  class="ml-2" icon="mdi-plus"></v-icon>
                     </v-btn>

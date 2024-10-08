@@ -21,10 +21,10 @@
                 <v-card-title>Lista de Projetos</v-card-title>
                 <v-card-title>
                     <v-btn 
-                        @click="openProjectForm('Adicionar Projeto', null)"
+                        to="/new-project"
                         variant="tonal" 
-                        color="primary"
-                    >Novo Projeto</v-btn>
+                        color="secondary"
+                    >Criar Projeto</v-btn>
                 </v-card-title>
             </v-row>
     
@@ -43,7 +43,7 @@
                             v-ripple
                             v-for="item in projects"
                             :key="item.id"
-                            @click="openProjectForm('Editar Projeto', item)"
+                            @click="openEditProject(item)"
                         >
                             <td>{{ item.id }}</td>
                             <td>{{ item.title }}</td>
@@ -62,7 +62,7 @@
                                 <v-btn 
                                 variant="tonal" 
                                 color="primary"
-                                to="/tasks"
+                                @click.stop="callRoute('/tasks')"
                                 >Tarefas</v-btn>
                             </td>
                             <td>
@@ -83,15 +83,35 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref } from 'vue' 
+import { useRouter } from 'vue-router'
+import { useProjectStore } from '@/stores/ProjectStore'
+
 import TimeLine from '@/components/TimeLine.vue'
 import FormProject from '@/components/project/FormProject.vue'
+
+const projectStore = useProjectStore()
+
+const router = useRouter()
+
+const callRoute = (routeName) => {
+  router.push(routeName)
+  window.scrollTo(0, 0);
+}
 
 let isTimelineOpen = ref(false)
 let projectTimeline = ref([])
 
 let isFormProjectOpen = ref(false)
 let labelFormProject = ref('')
+
+const openEditProject = (project) => {
+    console.log('openEditProject', project)
+
+    projectStore.setProjectSelected(project)
+
+    callRoute('/project')
+}
 
 const openProjectForm = (label, project) => {
 
@@ -179,6 +199,7 @@ let projects = ref([
     {
         id: 1,
         title: 'Projeto Planejamento - AR23',
+        description: 'Projeto Validações AR - 2024 - Outubro',
         userName: 'Eduardo',
         createdAt: '26/09/2024 9:40 PM',
         level: 2 
@@ -186,6 +207,7 @@ let projects = ref([
     {
         id: 2,
         title: 'Projeto Desenvolvimento - AR23',
+        description: 'Projeto Validações AR - 2024 - Outubro',
         userName: 'Eduardo',
         createdAt: '26/09/2024 9:40 PM',
         level: 4
@@ -193,6 +215,7 @@ let projects = ref([
     {
         id: 3,
         title: 'Projeto Validações - AR23',
+        description: 'Projeto Validações AR - 2024 - Outubro',
         userName: 'Eduardo',
         createdAt: '26/09/2024 9:40 PM',
         level: 3 
