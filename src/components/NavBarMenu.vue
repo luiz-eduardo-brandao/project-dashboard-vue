@@ -53,6 +53,18 @@
         </template>
 
         <v-card class="pa-2" min-width="200px">
+            <v-card-text>
+                <div class="d-flex flex-column">
+                    <h2 class="font-weight-light">
+                        {{ user.nome }}
+                    </h2>
+                    <h3 class="text-subtitle-1">
+                        {{ user.email }}  
+                    </h3>
+                </div>
+                <v-divider class="mt-2"></v-divider>
+            </v-card-text>
+
             <v-list :lines="false" density="compact" nav>
                 <v-list-item 
                     to="/profile"
@@ -105,6 +117,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useMenuStore } from '@/stores/MenuStore'
+import { useUserStore } from '@/stores/UserStore'
 
 let props = defineProps({
     profileImg: {
@@ -113,6 +126,9 @@ let props = defineProps({
 })
 
 const menuStore = useMenuStore()
+const userStore = useUserStore()
+
+let user = computed(() => userStore.getUser() )
 
 let notificationsList = computed(() => menuStore.getNotificationsList())
 

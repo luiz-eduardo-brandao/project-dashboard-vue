@@ -58,7 +58,6 @@
                     <v-card 
                         v-ripple 
                         class="cursor-pointer" 
-                        @click="console.log('oi')"
                     >
                         <v-card-title class="font-weight-light text-small">#{{ i }} : Desenvolver rota de login</v-card-title>
 
@@ -116,10 +115,22 @@
                                             v-ripple
                                             v-for="item in taskList"
                                             :key="item.id"
+                                            @click="openEditTask(item)"
                                         >
                                             <td>{{ item.id }}</td>
                                             <td>{{ item.title }}</td>
-                                            <td>{{ item.projectTitle }}</td>
+                                            <td>
+                                                <v-chip 
+                                                    append-icon="mdi-email" 
+                                                    variant="plain" 
+                                                    size="small"
+                                                    class="cursor-pointer font-weight-bold"
+                                                    color="orange"
+                                                    @click.stop="callRoute('projects')"
+                                                >
+                                                    {{ item.projectTitle }}
+                                                </v-chip>
+                                            </td>
                                             <td>{{ item.timeConsumed }}</td>
                                             <td>{{ item.startDate }}</td>
                                             <td>{{ item.endDate }}</td>
@@ -166,11 +177,27 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useTaskStore } from '@/stores/TaskStore'
 
 const store = useTaskStore()
 
-let listType = computed(() => store.getListType() )
+const router = useRouter()
+
+const callRoute = (routeName) => {
+  router.push(routeName)
+  window.scrollTo(0, 0);
+}
+
+let listType = computed(() => store.getListType())
+
+const openEditTask = (task) => {
+    console.log('openEditTask', task)
+
+    store.setTaskSelected(task)
+
+    callRoute('/task')
+}
 
 let taskList = ref([
     {

@@ -11,6 +11,7 @@ import Tasks from '../views/Tasks.vue'
 import Profile from '../views/Profile.vue'
 import EditProject from '@/views/Project/EditProject.vue'
 import NewProject from '@/views/Project/NewProject.vue'
+import EditTask from '@/views/Task/EditTask.vue'
 import NewTask from '@/views/Task/NewTask.vue'
 
 const router = createRouter({
@@ -60,6 +61,14 @@ const router = createRouter({
             path: '/tasks',
             name: 'tasks',
             component: Tasks,
+            meta: {
+                authorize: true
+            }
+        },
+        {
+            path: '/task',
+            name: 'editTask',
+            component: EditTask,
             meta: {
                 authorize: true
             }

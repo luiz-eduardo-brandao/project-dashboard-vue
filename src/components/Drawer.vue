@@ -4,9 +4,9 @@
         <div class="d-flex">
             <v-list-item
                 lines="two"
-                prepend-avatar="https://cdn.vuetifyjs.com/images/john.jpg"
-                subtitle="Logged in"
-                title="John Smith"
+                prepend-avatar="../assets/user-edu.jpg"
+                :subtitle="user.email"
+                :title="user.nome"
             ></v-list-item>
             <v-spacer></v-spacer>            
             <v-app-bar-nav-icon class="mr-3" @click="$emit('toggleDrawer')"></v-app-bar-nav-icon>
@@ -77,6 +77,8 @@ const menuStore = useMenuStore()
 
 let listaMenu = computed(() => menuStore.getListaMenu())
 let listaMenuAdmin = computed(() => menuStore.getListaMenuAdmin())
+
+let user = computed(() => useStore.getUser())
 
 const isAdmin = () => {
   const user = useStore.getUser()

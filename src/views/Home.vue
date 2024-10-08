@@ -6,8 +6,16 @@
         </h1>
         
      
-        
-        <h2 class="font-weight-light mt-10 mb-2">Projetos recentes:</h2>
+        <div class="d-flex mt-10 mb-2">
+          <h2 class="font-weight-light ">Projetos recentes:</h2>
+          <v-spacer></v-spacer>
+          <v-btn 
+              @click="callRoute('/new-project')"
+              variant="tonal" 
+              color="secondary"
+              append-icon="mdi-plus"
+          >Criar Projeto</v-btn>
+        </div>
         <v-divider class="mb-10"></v-divider>
 
         <v-row justify="center" class="mt-6 mb-10">
@@ -111,7 +119,16 @@
         </v-row>    
 
         
-        <h2 class="font-weight-light mt-10 mb-2">Tarefas em andamento:</h2>
+        <div class="d-flex mt-10 mb-2">
+          <h2 class="font-weight-light">Tarefas em andamento:</h2>
+          <v-spacer></v-spacer>
+          <v-btn 
+              @click="callRoute('/new-task')"
+              variant="tonal" 
+              color="warning"
+              append-icon="mdi-plus"
+          >Criar Tarefa</v-btn>
+        </div>
         <v-divider class="mb-10"></v-divider>
 
         <v-card class="mb-10">
@@ -133,7 +150,18 @@
                     >
                         <td>{{ item.id }}</td>
                         <td>{{ item.title }}</td>
-                        <td>{{ item.projectTitle }}</td>
+                        <td>
+                          <v-chip 
+                              append-icon="mdi-email" 
+                              variant="plain" 
+                              size="small"
+                              class="cursor-pointer font-weight-bold"
+                              color="orange"
+                              @click.stop="callRoute('projects')"
+                          >
+                              {{ item.projectTitle }}
+                          </v-chip>
+                        </td>
                         <td>{{ item.timeConsumed }}</td>
                         <td>{{ item.startDate }}</td>
                         <td>{{ item.endDate }}</td>
@@ -265,8 +293,8 @@ let taskListHeader = ref([
     key: 'id',
     title: 'Id',
     },
-    { key: 'projectTitle', title: 'Projeto' },
     { key: 'title', title: 'Tarefa' },
+    { key: 'projectTitle', title: 'Projeto' },
     { key: 'timeConsumed', title: 'Tempo Gasto' },
     { key: 'startDate', title: 'Início' },
 ])
