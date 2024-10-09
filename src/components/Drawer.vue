@@ -5,8 +5,8 @@
             <v-list-item
                 lines="two"
                 prepend-avatar="../assets/user-edu.jpg"
-                :subtitle="user.email"
-                :title="user.nome"
+                :subtitle="user ? user.email : ''"
+                :title="user ? user.nome : ''"
             ></v-list-item>
             <v-spacer></v-spacer>            
             <v-app-bar-nav-icon class="mr-3" @click="$emit('toggleDrawer')"></v-app-bar-nav-icon>

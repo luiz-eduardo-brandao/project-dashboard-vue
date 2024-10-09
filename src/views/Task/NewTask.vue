@@ -6,11 +6,10 @@
             <v-btn 
                 class="mr-4"
                 variant="tonal" 
-                color="warning"
-                append-icon="mdi-keyboard-backspace"
-                size="large"
+                color="secondary"
+                icon="mdi-keyboard-backspace"
                 to="/tasks"
-            >Tarefas</v-btn>
+            ></v-btn>
         </div>
         <v-divider class="mt-2 mb-10"></v-divider>
 

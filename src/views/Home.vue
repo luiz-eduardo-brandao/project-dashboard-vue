@@ -7,7 +7,9 @@
         
      
         <div class="d-flex mt-10 mb-2">
-          <h2 class="font-weight-light ">Projetos recentes:</h2>
+          <a href="/projects" class="text-decoration-none">
+            <h2 class="font-weight-light ">Projetos recentes:</h2>
+          </a>
           <v-spacer></v-spacer>
           <v-btn 
               @click="callRoute('/new-project')"
@@ -120,7 +122,9 @@
 
         
         <div class="d-flex mt-10 mb-2">
-          <h2 class="font-weight-light">Tarefas em andamento:</h2>
+          <a href="/tasks" class="text-decoration-none">
+            <h2 class="font-weight-light">Tarefas em andamento:</h2>
+          </a>
           <v-spacer></v-spacer>
           <v-btn 
               @click="callRoute('/new-task')"

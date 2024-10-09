@@ -1,5 +1,5 @@
 <template>
-    <div class="h-100 mb-10">
+    <div class="h-full mb-10">
         <h1 class="font-weight-light">Suas Tarefas!</h1>
         
         <v-divider class="my-6"></v-divider>

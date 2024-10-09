@@ -6,11 +6,10 @@
             <v-btn 
                 class="mr-4"
                 variant="tonal" 
-                color="warning"
-                append-icon="mdi-keyboard-backspace"
-                size="large"
+                color="secondary"
+                icon="mdi-keyboard-backspace"
                 to="/projects"
-            >Projetos</v-btn>
+            ></v-btn>
         </div>
         <v-divider class="mt-2 mb-10"></v-divider>
 
@@ -35,21 +34,6 @@
             </v-row>
 
             <v-row>
-                <v-col cols="12" md="6">
-                    <v-select
-                    class="mr-3"
-                    label="Colaboradores"
-                    variant="outlined"
-                    :items="[
-                        'Usuário 1', 
-                        'Usuário 2', 
-                        'Usuário 3'
-                    ]"
-                ></v-select>
-                </v-col>
-            </v-row>
-
-            <v-row>
                 <v-col cols="6" md="3">
                     <v-select
                     class="mr-3"
@@ -57,6 +41,23 @@
                     variant="outlined"
                     :items="['Fácil', 'Médio', 'Difícil']"
                 ></v-select>
+                </v-col>
+            </v-row>
+
+            <v-row>
+                <v-col cols="12" md="6">
+                    <v-select
+                        v-model="colaborators"
+                        :items="users"
+                        :item-props="itemProps"
+                        hint="Escolha os colaboradores para esse projeto"
+                        label="Colaboradores"
+                        chips
+                        multiple
+                        clearable
+                        persistent-hint
+                        variant="solo-filled"
+                    ></v-select>
                 </v-col>
             </v-row>
 
@@ -74,3 +75,24 @@
         </div>
     </div>
 </template>
+
+<script setup>
+import { ref } from 'vue'
+
+let colaborators = ref([])
+let users = ref([
+        { id: 1, nome: 'Eduardo', email: 'oi@gmail.com'},
+        { id: 2, nome: 'Rafael', email: 'oi@gmail.com'},
+        { id: 3, nome: 'Pedro', email: 'oi@gmail.com'},
+        { id: 4, nome: 'Jorge', email: 'oi@gmail.com'},
+        { id: 5, nome: 'JoAndrérge', email: 'oi@gmail.com'},
+    ])
+
+const itemProps = (item) => {
+    return {
+        title: item.nome,
+        subtitle: item.email,
+    }
+}
+
+</script>

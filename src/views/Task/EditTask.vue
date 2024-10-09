@@ -1,16 +1,15 @@
 <template>
-    <div class="h-screen">
+    <div class="h-full">
         <div class="d-flex">
             <h1 class="font-weight-light">Titulo</h1>
             <v-spacer></v-spacer>
             <v-btn 
                 class="mr-4"
                 variant="tonal" 
-                color="warning"
-                append-icon="mdi-keyboard-backspace"
-                size="large"
+                color="secondary"
+                icon="mdi-keyboard-backspace"
                 to="/tasks"
-            >Tarefas</v-btn>
+            ></v-btn>
         </div>
         <v-divider class="mt-2 mb-10"></v-divider>
 
@@ -36,6 +35,16 @@
                         'Usuário 3'
                     ]"
                 ></v-select>
+                </v-col>    
+            </v-row>
+            <v-row>
+                <v-col cols="12" md="6">
+                    <v-text-field 
+                        model-value="Eduardo"
+                        label="Autor" 
+                        placeholder="Digite o nome de usuário..."
+                        readonly
+                    ></v-text-field>
                 </v-col>    
             </v-row>
             <v-row>
@@ -74,21 +83,6 @@
                         label="Data Fim" 
                         placeholder="Digite o nome de usuário..."
                     ></v-text-field>
-                </v-col>
-            </v-row>
-
-            <v-row>
-                <v-col cols="12" md="6">
-                    <v-select
-                    class="mr-3"
-                    label="Colaboradores"
-                    variant="outlined"
-                    :items="[
-                        'Usuário 1', 
-                        'Usuário 2', 
-                        'Usuário 3'
-                    ]"
-                ></v-select>
                 </v-col>
             </v-row>
 

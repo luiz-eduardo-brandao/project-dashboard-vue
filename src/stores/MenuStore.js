@@ -103,14 +103,21 @@ export const useMenuStore = defineStore('menu', () => {
         },
     ])
 
+    let theme = ref('light')
+
+    const setTheme = (value) => theme.value = value
+
     const getListaMenu = () => menuList.value
     const getListaMenuAdmin = () => menuAdminList.value
     const getNotificationsList = () => notificationsList.value
+    const getTheme = () => theme.value
 
     return {
+        setTheme,
         getListaMenu,
         getListaMenuAdmin,
-        getNotificationsList
+        getNotificationsList,
+        getTheme
     }
 
 })

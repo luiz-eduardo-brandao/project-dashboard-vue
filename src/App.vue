@@ -1,5 +1,5 @@
 <template>
-  <v-app theme="dark">
+  <v-app :theme="theme">
     <SnackBar />
 
     <div v-if="!userStore.getIsAuthenticated()">
@@ -14,6 +14,7 @@
       <NavBar 
         :isDrawerOpen="isDrawerOpen"
         :isUserAuthenticated="userStore.getIsAuthenticated()"
+        @changeTheme="changeTheme"
         @toggleDrawer="openCloseDrawer" 
       >
         <template #nav-bar-menu>
@@ -47,13 +48,16 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from './stores/UserStore'
+import { useMenuStore } from '@/stores/MenuStore'
 
 const router = useRouter()
 const callRoute = (routeName) => router.push(routeName)
 
 const userStore = useUserStore()
+const menuStore = useMenuStore()
 
 let user = computed(() => userStore.getUser() )
+let theme = computed(() => menuStore.getTheme() )
 
 import Lobby from './views/Account/Lobby.vue'
 import Drawer from './components/Drawer.vue'
@@ -68,6 +72,10 @@ let dialog = ref(false)
 
 const openCloseDrawer = () => {
   isDrawerOpen.value = !isDrawerOpen.value
+}
+
+const changeTheme = () => {
+  menuStore.setTheme(theme.value == 'dark' ? 'light' : 'dark')
 }
 
 const logout = () => {

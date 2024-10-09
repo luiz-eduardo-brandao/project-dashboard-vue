@@ -18,6 +18,17 @@
         </div>
       </v-app-bar-title>
 
+      <v-switch 
+          @click="$emit('changeTheme')"
+          theme="light"
+          base-color="white-darken-1"
+          color="grey-darken-3"
+          false-icon="mdi-white-balance-sunny"
+          true-icon="mdi-moon-waxing-crescent"
+          inset 
+          class="mx-3 mt-5"
+      ></v-switch>
+
       <slot name="nav-bar-menu"></slot>
     </v-app-bar>
 </template>
