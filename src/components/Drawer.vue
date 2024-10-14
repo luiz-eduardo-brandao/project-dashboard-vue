@@ -1,6 +1,6 @@
 <template>
-    <v-navigation-drawer class="d-flex flex-column justify-space-between" width="320" v-model="props.isDrawerOpen">
-      <v-list class="h-75">
+    <v-navigation-drawer class="d-flex flex-column justify-space-between " width="320" v-model="props.isDrawerOpen">
+      <v-list class="h-100">
         <div class="d-flex">
             <v-list-item
                 lines="two"
@@ -59,11 +59,11 @@
         </div>
 
       </v-list>
-      <v-row justify="center">
+      <!-- <v-row justify="center">
         <div class="position-absolute bottom-0 mb-5" >
           <v-btn icon="mdi-cog"></v-btn>
         </div>
-      </v-row>
+      </v-row> -->
     </v-navigation-drawer>
 </template>
 

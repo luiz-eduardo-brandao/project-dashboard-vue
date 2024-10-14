@@ -23,7 +23,7 @@ export const useMenuStore = defineStore('menu', () => {
         },
         {
             id: 4,
-            title: 'Overview',
+            title: 'Overview (em breve)',
             icon: 'mdi-monitor-dashboard',
             subMenu: [
                 {
@@ -54,7 +54,7 @@ export const useMenuStore = defineStore('menu', () => {
         },
         {
             id: 9,
-            title: 'Sistema',
+            title: 'Sistema (em breve)',
             route: '',
             icon: 'mdi-cog'
         },
@@ -103,7 +103,7 @@ export const useMenuStore = defineStore('menu', () => {
         },
     ])
 
-    let theme = ref('light')
+    let theme = ref('dark')
 
     const setTheme = (value) => theme.value = value
 

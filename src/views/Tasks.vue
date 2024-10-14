@@ -1,5 +1,5 @@
 <template>
-    <div class="h-full mb-10">
+    <div class="h-screen mb-10">
         <h1 class="font-weight-light">Suas Tarefas!</h1>
         
         <v-divider class="my-6"></v-divider>
@@ -15,7 +15,7 @@
                     class="mr-3"
                     label="Projetos"
                     variant="outlined"
-                    :items="['Fácil', 'Médio', 'Difícil']"
+                    :items="projects"
                 ></v-select>
             
                 <v-btn icon="mdi-magnify" class="mx-2"></v-btn>
@@ -48,45 +48,56 @@
         </v-container>
      
 
-        <div class="mt-5">
+        <div class="mt-5 mb-10">
             <v-row v-if="!listType">
                 <v-col
-                    v-for="i in 30"
-                    :key="i"
                     cols="12" sm="6" md="4" lg="3"
+                    v-for="item in taskList"
+                    :key="item.id"
+                    @click="openEditTask(item)"
                 >
                     <v-card 
                         v-ripple 
                         class="cursor-pointer" 
                     >
-                        <v-card-title class="font-weight-light text-small">#{{ i }} : Desenvolver rota de login</v-card-title>
+                        <v-card-title class="font-weight-light text-small">{{ item.title }}</v-card-title>
 
                         <v-card-text 
-                            class="mt-2 pa-1 mx-2 rounded border bg-purple-darken-2
-                            d-flex justify-space-between"
+                            class="mt-2 pa-2 mx-2 rounded border bg-purple-darken-2
+                            text-center"
                         >
-                            <div>
-                                Projeto Desenvolvimento - AR23
-                            </div>
-                            <div class="font-weight-light">
-                                Total Gasto: 01:00
+                            <div class="text-center">
+                                <strong>
+                                    {{ item.projectTitle }}
+                                </strong>
                             </div>
                         </v-card-text>
-                        
+
                         <v-card-text 
                             class="mt-2 pa-2 mx-2 rounded border  text-center"
                         >
-                            <strong>Início:</strong> 27/09/2024 03:00 | <strong>Fim:</strong> 27/09/2024 03:00
+                            <strong>Início:</strong> {{ item.startDate }} | <strong>Fim:</strong> {{ item.endDate }}
                         </v-card-text>
-                        
+
+                        <v-card-text 
+                            class="mt-2 pa-1 mx-2 rounded border  text-center"
+                        >
+                            <div class="font-weight-light">
+                                <strong>Total Gasto:</strong>  {{ item.timeConsumed }}
+                            </div>
+                        </v-card-text>
+
                         <v-card-text class="mt-2">
-                            Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui. 
+                            <div class="d-flex flex-column">
+                                <h3 class="mb-1 font-weight-light">Descrição:</h3>
+                                {{ item.description }}  
+                            </div>
                         </v-card-text>
 
                         <v-card-actions>
                             <v-row justify="center">
-                                <v-btn class="mx-2">Iniciar</v-btn>
-                                <v-btn class="mx-2">Parar</v-btn>
+                                <v-btn class="" base-color="blue" append-icon="mdi-play-outline">Iniciar</v-btn>
+                                <v-btn class="" base-color="blue" prepend-icon="mdi-pause">Parar</v-btn>
                                 <v-btn class="mx-2" variant="tonal" color="red">Excluir</v-btn>
                             </v-row>
                         </v-card-actions>
@@ -179,8 +190,10 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useTaskStore } from '@/stores/TaskStore'
+import { useProjectStore } from '@/stores/ProjectStore'
 
 const store = useTaskStore()
+const projectStore = useProjectStore()
 
 const router = useRouter()
 
@@ -190,6 +203,7 @@ const callRoute = (routeName) => {
 }
 
 let listType = computed(() => store.getListType())
+let projects = computed(() => projectStore.getProjectsList())
 
 const openEditTask = (task) => {
     console.log('openEditTask', task)
@@ -199,35 +213,7 @@ const openEditTask = (task) => {
     callRoute('/task')
 }
 
-let taskList = ref([
-    {
-        id: 1,
-        title: 'Desenvolver rota de login',
-        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
-        projectId: 1,
-        projectTitle: 'Projeto Desenvolvimento - AR23',
-        timeConsumed: '01:00',
-    },
-    {
-        id: 2,
-        title: 'Desenvolver rota de login',
-        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
-        projectId: 1,
-        projectTitle: 'Projeto Desenvolvimento - AR23',
-        timeConsumed: '01:00',
-        startDate: '27/09/2024 03:00',
-    },
-    {
-        id: 3,
-        title: 'Desenvolver rota de login',
-        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
-        projectId: 1,
-        projectTitle: 'Projeto Desenvolvimento - AR23',
-        timeConsumed: '01:00',
-        startDate: '27/09/2024 03:00',
-        endDate: '27/09/2024 03:00'
-    }
-])
+let taskList = computed(() => store.getTasksList())
 
 let taskListHeader = ref([
     {

@@ -186,9 +186,11 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/UserStore'
 import { useProjectStore } from '@/stores/ProjectStore'
+import { useTaskStore } from '@/stores/TaskStore'
 
 const userStore = useUserStore()
 const projectStore = useProjectStore()
+const taskStore = useTaskStore()
 
 const router = useRouter()
 
@@ -261,35 +263,7 @@ let recentProjects = ref([
     },
 ])
 
-let taskList = ref([
-    {
-        id: 1,
-        title: 'Desenvolver rota de login',
-        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
-        projectId: 1,
-        projectTitle: 'Projeto Desenvolvimento - AR23',
-        timeConsumed: '01:00',
-        startDate: '27/09/2024 03:00',
-    },
-    {
-        id: 2,
-        title: 'Desenvolver rota de login',
-        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
-        projectId: 1,
-        projectTitle: 'Projeto Desenvolvimento - AR23',
-        timeConsumed: '01:00',
-        startDate: '27/09/2024 03:00',
-    },
-    {
-        id: 3,
-        title: 'Desenvolver rota de login',
-        description: 'Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet. Mauris cursus commodo interdum. Praesent ut risus eget metus luctus accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a sit amet dui.',
-        projectId: 1,
-        projectTitle: 'Projeto Desenvolvimento - AR23',
-        timeConsumed: '01:00',
-        startDate: '27/09/2024 03:00',
-    }
-])
+let taskList = computed(() => taskStore.getTasksList().filter(t => !t.endDate))
 
 let taskListHeader = ref([
     {
